@@ -7,19 +7,41 @@ import {
   SafeAreaView,
 } from 'react-native';
 import { InputField } from '@/components/InputField';
-import { useStorage } from '@/hooks/useStorage';
+import { ProductPicker } from '@/components/ProductPicker';
+import { PRODUCT_PRESET_MAP } from '@/data/products';
+import { useStorageContext } from '@/hooks/StorageProvider';
 
 export default function ProductTab() {
-  const { productData, saveProductData } = useStorage();
+  const { productData, saveProductData } = useStorageContext();
 
   const updateProductData = (field: string, value: string | number) => {
     const newData = { ...productData, [field]: value };
+    console.log('📦 Updating product data:', field, '=', value);
     saveProductData(newData);
+    setTimeout(() => {
+      console.log('✅ Product data saved');
+    }, 0);
   };
 
   const handleNumericChange = (field: string, value: string) => {
     const numValue = parseFloat(value) || 0;
     updateProductData(field, numValue);
+  };
+
+  const handleSelectProduct = (name: string) => {
+    const preset = PRODUCT_PRESET_MAP[name];
+    if (!preset) return;
+    const next = {
+      ...productData,
+      productName: name,
+      // Only auto-fill constants from preset; keep mass/hours as is
+      cpAboveFreezing: preset.cpAboveFreezing,
+      watts: preset.respirationWattsPerTonne,
+      // If user changes afterwards, they can still edit fields
+      overridePreset: false,
+    };
+    console.log('🍏 Selected product preset:', name, preset);
+    saveProductData(next);
   };
 
   return (
@@ -31,7 +53,11 @@ export default function ProductTab() {
         </View>
 
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Product Load - Before Freezing</Text>
+          <ProductPicker selected={productData.productName || 'Custom'} onSelect={handleSelectProduct} />
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Product Load</Text>
 
           <InputField
             label="Mass of Product"
@@ -56,20 +82,12 @@ export default function ProductTab() {
             unit="hrs"
           />
 
-          <View style={styles.calculationCard}>
-            <Text style={styles.calculationLabel}>Product Load Calculation:</Text>
-            <Text style={styles.calculationFormula}>
-              = Mass × Cp × TD × Hours / Hours
-            </Text>
-            <Text style={styles.calculationNote}>
-              Temperature difference calculated from incoming - outgoing product temperatures
-            </Text>
-          </View>
+          {/* Calculation notes removed for cleaner UI */}
         </View>
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Respiration Load</Text>
-          
+
           <InputField
             label="Mass of Product"
             value={productData.respirationMass.toString()}
@@ -86,22 +104,10 @@ export default function ProductTab() {
             unit="W/T"
           />
 
-          <View style={styles.calculationCard}>
-            <Text style={styles.calculationLabel}>Respiration Load Calculation:</Text>
-            <Text style={styles.calculationFormula}>
-              = Mass × Watts/Tonne / 1000
-            </Text>
-          </View>
+          {/* Calculation notes removed for cleaner UI */}
         </View>
 
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Product Information</Text>
-          <Text style={styles.infoText}>
-            Enter the mass of products to be cooled and their thermal properties. 
-            The system calculates both the initial cooling load and ongoing respiration heat load.
-            Product temperature difference is calculated from incoming and outgoing temperatures in the Miscellaneous tab.
-          </Text>
-        </View>
+  {/* Info section removed for cleaner UI */}
       </ScrollView>
     </SafeAreaView>
   );

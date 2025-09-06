@@ -22,6 +22,10 @@ export interface ProductData {
   // Respiration
   respirationMass: number;
   watts: number;
+
+  // Preset selection
+  productName?: string; // e.g., 'Banana', 'Custom'
+  overridePreset?: boolean; // if user edits fields after preset
 }
 
 export interface MiscellaneousData {
@@ -55,14 +59,19 @@ export interface MiscellaneousData {
   productOutgoing: number;
   tempUnit: 'C' | 'F';
   
-  // Additional parameters
-  dailyLoading: number;
-  cpAboveFreezingMisc: number;
-  pullDownTime: number;
-  airFlowPerFan: number;
-  doorClearOpening: number;
-  storageCapacity: number;
-  maximumStorage: number;
+  // Additional Excel parameters
+  dailyLoading?: number;
+  insulationType?: string;
+  insulationThickness?: number;
+  cpAboveFreezingMisc?: number;
+  pullDownTime?: number;
+  airFlowPerFan?: number;
+  doorClearOpening?: number;
+  storageCapacity?: number;
+  maximumStorage?: number;
+  steamGenCapacity?: number;
+  roomLength?: number;
+  hoursOfOperation?: number;
 }
 
 export interface CalculationResults {
@@ -86,6 +95,7 @@ export interface CalculationResults {
   occupancyLoad: number;
   lightLoad: number;
   heaterLoad: number;
+  steamHumidifierLoad?: number;
   totalMiscLoad: number;
   
   // Final results
@@ -99,6 +109,7 @@ export interface CalculationResults {
   // Additional results
   loadInKJ: number;
   loadInKw: number;
+  loadInBtu?: number;
   refrigerationCapacity: number;
   
   // Temperature differences (calculated)
@@ -106,4 +117,9 @@ export interface CalculationResults {
   ceilingTempDiff: number;
   floorTempDiff: number;
   productTempDiff: number;
+  
+  // Additional Excel matching properties
+  dailyLoading?: number;
+  insulationType?: string;
+  insulationThickness?: number;
 }

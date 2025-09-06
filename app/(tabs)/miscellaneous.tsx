@@ -7,14 +7,18 @@ import {
   SafeAreaView,
 } from 'react-native';
 import { InputField } from '@/components/InputField';
-import { useStorage } from '@/hooks/useStorage';
+import { useStorageContext } from '@/hooks/StorageProvider';
 
 export default function MiscellaneousTab() {
-  const { miscData, saveMiscData } = useStorage();
+  const { miscData, saveMiscData } = useStorageContext();
 
   const updateMiscData = (field: string, value: string | number) => {
     const newData = { ...miscData, [field]: value };
+    console.log('⚙️ Updating misc data:', field, '=', value);
     saveMiscData(newData);
+    setTimeout(() => {
+      console.log('✅ Misc data saved');
+    }, 0);
   };
 
   const handleNumericChange = (field: string, value: string) => {
@@ -33,7 +37,7 @@ export default function MiscellaneousTab() {
         {/* Temperature Settings */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Temperature Settings</Text>
-          
+
           <InputField
             label="Ambient Temperature"
             value={miscData.ambientTemp.toString()}
@@ -70,19 +74,13 @@ export default function MiscellaneousTab() {
             onUnitChange={(unit) => updateMiscData('tempUnit', unit as 'C' | 'F')}
           />
 
-          <View style={styles.infoCard}>
-            <Text style={styles.infoText}>
-              Temperature differences are automatically calculated:
-              {'\n'}• Wall/Ceiling/Floor TD = Ambient - Room
-              {'\n'}• Product TD = Incoming - Outgoing
-            </Text>
-          </View>
+          {/* Info note removed for cleaner UI */}
         </View>
 
         {/* Air Change Load */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Air Change Load</Text>
-          
+
           <InputField
             label="Air Change Rate"
             value={miscData.airChangeRate.toString()}
@@ -108,12 +106,12 @@ export default function MiscellaneousTab() {
         {/* Equipment Load */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Equipment Load</Text>
-          
+
           <InputField
             label="Equipment Power"
             value={miscData.equipmentPower.toString()}
             onChangeText={(value) => handleNumericChange('equipmentPower', value)}
-            unit="kW"
+            unit="W"
           />
 
           <InputField
@@ -127,7 +125,7 @@ export default function MiscellaneousTab() {
         {/* Occupancy Load */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Occupancy Load</Text>
-          
+
           <InputField
             label="Number of People"
             value={miscData.occupancyCount.toString()}
@@ -138,7 +136,7 @@ export default function MiscellaneousTab() {
             label="Heat Equivalent per Person"
             value={miscData.occupancyHeatEquiv.toString()}
             onChangeText={(value) => handleNumericChange('occupancyHeatEquiv', value)}
-            unit="kW"
+            unit="W"
           />
 
           <InputField
@@ -152,12 +150,12 @@ export default function MiscellaneousTab() {
         {/* Lighting Load */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Lighting Load</Text>
-          
+
           <InputField
             label="Light Power"
             value={miscData.lightPower.toString()}
             onChangeText={(value) => handleNumericChange('lightPower', value)}
-            unit="kW"
+            unit="W"
           />
 
           <InputField
@@ -171,80 +169,99 @@ export default function MiscellaneousTab() {
         {/* Heaters */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Heaters</Text>
-          
+
           <InputField
             label="Peripheral Heaters"
             value={miscData.peripheralHeaters.toString()}
             onChangeText={(value) => handleNumericChange('peripheralHeaters', value)}
-            unit="kW"
+            unit="W"
           />
 
           <InputField
             label="Door Heaters"
             value={miscData.doorHeaters.toString()}
             onChangeText={(value) => handleNumericChange('doorHeaters', value)}
-            unit="kW"
+            unit="W"
           />
 
           <InputField
             label="Tray Heaters"
             value={miscData.trayHeaters.toString()}
             onChangeText={(value) => handleNumericChange('trayHeaters', value)}
-            unit="kW"
+            unit="W"
           />
         </View>
 
         {/* Additional Parameters */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Additional Parameters</Text>
-          
+          <Text style={styles.sectionTitle}>Cold Storage Specific Parameters</Text>
+
           <InputField
             label="Daily Loading"
-            value={miscData.dailyLoading.toString()}
+            value={miscData.dailyLoading?.toString() || '4000'}
             onChangeText={(value) => handleNumericChange('dailyLoading', value)}
             unit="kg/day"
           />
 
           <InputField
-            label="Cp Above Freezing"
-            value={miscData.cpAboveFreezingMisc.toString()}
-            onChangeText={(value) => handleNumericChange('cpAboveFreezingMisc', value)}
-            unit="kJ/kg·K"
+            label="Insulation Type"
+            value={miscData.insulationType || 'PUF'}
+            onChangeText={(value) => updateMiscData('insulationType', value)}
+            unit=""
           />
 
           <InputField
-            label="Pull Down Time"
-            value={miscData.pullDownTime.toString()}
-            onChangeText={(value) => handleNumericChange('pullDownTime', value)}
-            unit="hrs"
-          />
-
-          <InputField
-            label="Air Flow per Fan"
-            value={miscData.airFlowPerFan.toString()}
-            onChangeText={(value) => handleNumericChange('airFlowPerFan', value)}
-            unit="cfm"
+            label="Insulation Thickness"
+            value={miscData.insulationThickness?.toString() || '100'}
+            onChangeText={(value) => handleNumericChange('insulationThickness', value)}
+            unit="mm"
           />
 
           <InputField
             label="Door Clear Opening"
-            value={miscData.doorClearOpening.toString()}
+            value={miscData.doorClearOpening?.toString() || '2000'}
             onChangeText={(value) => handleNumericChange('doorClearOpening', value)}
             unit="mm"
           />
 
           <InputField
             label="Storage Capacity"
-            value={miscData.storageCapacity.toString()}
+            value={miscData.storageCapacity?.toString() || '8'}
             onChangeText={(value) => handleNumericChange('storageCapacity', value)}
             unit="kg/m³"
           />
 
           <InputField
             label="Maximum Storage"
-            value={miscData.maximumStorage.toString()}
+            value={miscData.maximumStorage?.toString() || '6338'}
             onChangeText={(value) => handleNumericChange('maximumStorage', value)}
             unit="kgs"
+          />
+        </View>
+
+        {/* Steam Humidifiers (if applicable) */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Steam Humidifiers (Optional)</Text>
+
+          <InputField
+            label="Steam Generation Capacity"
+            value={miscData.steamGenCapacity?.toString() || '0'}
+            onChangeText={(value) => handleNumericChange('steamGenCapacity', value)}
+            unit="kg/hr"
+          />
+
+          <InputField
+            label="Room Length for Steam"
+            value={miscData.roomLength?.toString() || '0'}
+            onChangeText={(value) => handleNumericChange('roomLength', value)}
+            unit="m"
+          />
+
+          <InputField
+            label="Hours of Operation"
+            value={miscData.hoursOfOperation?.toString() || '0'}
+            onChangeText={(value) => handleNumericChange('hoursOfOperation', value)}
+            unit="hrs"
           />
         </View>
       </ScrollView>

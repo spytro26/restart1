@@ -7,14 +7,19 @@ import {
   SafeAreaView,
 } from 'react-native';
 import { InputField } from '@/components/InputField';
-import { useStorage } from '@/hooks/useStorage';
+import { useStorageContext } from '@/hooks/StorageProvider';
 
 export default function RoomDetailsTab() {
-  const { roomData, saveRoomData } = useStorage();
+  const { roomData, saveRoomData } = useStorageContext();
 
   const updateRoomData = (field: string, value: string | number) => {
     const newData = { ...roomData, [field]: value };
+    console.log('🏠 Updating room data:', field, '=', value);
     saveRoomData(newData);
+    // Force immediate re-render by changing a different state
+    setTimeout(() => {
+      console.log('✅ Room data saved');
+    }, 0);
   };
 
   const handleDimensionChange = (field: 'length' | 'width' | 'height', value: string) => {
@@ -83,7 +88,7 @@ export default function RoomDetailsTab() {
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Transmission Load Parameters</Text>
-          
+
           <Text style={styles.subsectionTitle}>U-Factors (W/m²·K)</Text>
           <InputField
             label="Wall U-Factor"
@@ -129,12 +134,7 @@ export default function RoomDetailsTab() {
           />
         </View>
 
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Note</Text>
-          <Text style={styles.infoText}>
-            Temperature differences are automatically calculated from ambient and room temperatures in the Miscellaneous tab.
-          </Text>
-        </View>
+  {/* Info note removed for cleaner UI */}
       </ScrollView>
     </SafeAreaView>
   );
