@@ -93,36 +93,24 @@ export const StorageProvider: React.FC<React.PropsWithChildren> = ({ children })
     const [productData, setProductData] = useState<ProductData>(defaultProductData);
     const [miscData, setMiscData] = useState<MiscellaneousData>(defaultMiscData);
 
-    // Load from localStorage once
+    // Load from storage once - simplified for React Native compatibility
     useEffect(() => {
-        try {
-            const roomJson = localStorage.getItem(STORAGE_KEYS.ROOM_DATA);
-            const productJson = localStorage.getItem(STORAGE_KEYS.PRODUCT_DATA);
-            const miscJson = localStorage.getItem(STORAGE_KEYS.MISC_DATA);
-
-            if (roomJson) setRoomData(prev => ({ ...prev, ...JSON.parse(roomJson) }));
-            if (productJson) setProductData(prev => ({ ...prev, ...JSON.parse(productJson) }));
-            if (miscJson) setMiscData(prev => ({ ...prev, ...JSON.parse(miscJson) }));
-        } catch (e) {
-            console.log('Error loading storage:', e);
-        }
+        // For now, just use defaults - storage can be added later if needed
+        console.log('Cold room calculator initialized with default values');
     }, []);
 
     const saveRoomData = (data: RoomData) => {
         setRoomData({ ...data });
-        localStorage.setItem(STORAGE_KEYS.ROOM_DATA, JSON.stringify(data));
         triggerGlobalUpdate();
     };
 
     const saveProductData = (data: ProductData) => {
         setProductData({ ...data });
-        localStorage.setItem(STORAGE_KEYS.PRODUCT_DATA, JSON.stringify(data));
         triggerGlobalUpdate();
     };
 
     const saveMiscData = (data: MiscellaneousData) => {
         setMiscData({ ...data });
-        localStorage.setItem(STORAGE_KEYS.MISC_DATA, JSON.stringify(data));
         triggerGlobalUpdate();
     };
 
@@ -130,9 +118,6 @@ export const StorageProvider: React.FC<React.PropsWithChildren> = ({ children })
         setRoomData({ ...defaultRoomData });
         setProductData({ ...defaultProductData });
         setMiscData({ ...defaultMiscData });
-        localStorage.removeItem(STORAGE_KEYS.ROOM_DATA);
-        localStorage.removeItem(STORAGE_KEYS.PRODUCT_DATA);
-        localStorage.removeItem(STORAGE_KEYS.MISC_DATA);
         triggerGlobalUpdate();
     };
 

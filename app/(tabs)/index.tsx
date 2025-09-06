@@ -134,7 +134,7 @@ export default function RoomDetailsTab() {
           />
         </View>
 
-  {/* Info note removed for cleaner UI */}
+        {/* Info note removed for cleaner UI */}
       </ScrollView>
     </SafeAreaView>
   );

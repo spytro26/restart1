@@ -11,6 +11,7 @@ interface InputFieldProps {
   unitOptions?: string[];
   selectedUnit?: string;
   onUnitChange?: (unit: string) => void;
+  editable?: boolean;
 }
 
 export const InputField: React.FC<InputFieldProps> = ({
@@ -23,6 +24,7 @@ export const InputField: React.FC<InputFieldProps> = ({
   unitOptions,
   selectedUnit,
   onUnitChange,
+  editable = true,
 }) => {
   return (
     <View style={styles.container}>
@@ -35,6 +37,7 @@ export const InputField: React.FC<InputFieldProps> = ({
           placeholder={placeholder}
           keyboardType={keyboardType}
           placeholderTextColor="#64748b"
+          editable={editable}
         />
         {unitOptions && selectedUnit && onUnitChange ? (
           <View style={styles.unitPickerContainer}>

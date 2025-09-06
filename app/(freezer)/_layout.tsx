@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Tabs, router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
-export default function ColdRoomTabsLayout() {
+export default function FreezerTabsLayout() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -13,7 +13,7 @@ export default function ColdRoomTabsLayout() {
         >
           <Ionicons name="arrow-back" size={24} color="#1e40af" />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Cold Room Calculator</Text>
+        <Text style={styles.headerTitle}>Freezer Room Calculator</Text>
         <View style={styles.spacer} />
       </View>
 
@@ -49,7 +49,7 @@ export default function ColdRoomTabsLayout() {
           options={{
             title: 'Product',
             tabBarIcon: ({ color, size }) => (
-              <Ionicons name="leaf-outline" size={size} color={color} />
+              <Ionicons name="snow-outline" size={size} color={color} />
             ),
           }}
         />

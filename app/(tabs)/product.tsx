@@ -107,7 +107,7 @@ export default function ProductTab() {
           {/* Calculation notes removed for cleaner UI */}
         </View>
 
-  {/* Info section removed for cleaner UI */}
+        {/* Info section removed for cleaner UI */}
       </ScrollView>
     </SafeAreaView>
   );

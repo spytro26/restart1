@@ -28,6 +28,24 @@ export interface ProductData {
   overridePreset?: boolean; // if user edits fields after preset
 }
 
+// Freezer-specific product data
+export interface FreezerProductData extends ProductData {
+  // Latent heat for freezing
+  latentHeatOfFusion: number; // kJ/kg
+  
+  // Cp below freezing
+  cpBelowFreezing: number; // kJ/kg·K
+  
+  // Freezing point
+  freezingPoint: number; // °C
+}
+
+// Freezer-specific miscellaneous data
+export interface FreezerMiscellaneousData extends MiscellaneousData {
+  // Freezer-specific parameters
+  productOutgoingFreezer?: number; // Final temperature after freezing
+}
+
 export interface MiscellaneousData {
   // Air Change
   airChangeRate: number;
@@ -122,4 +140,13 @@ export interface CalculationResults {
   dailyLoading?: number;
   insulationType?: string;
   insulationThickness?: number;
+}
+
+// Freezer-specific calculation results
+export interface FreezerCalculationResults extends CalculationResults {
+  // Freezer-specific loads
+  beforeFreezingLoad: number;
+  latentHeatLoad: number;
+  afterFreezingLoad: number;
+  totalProductLoad: number;
 }

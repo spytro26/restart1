@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 interface UnitPickerProps {
-  label: string;
+  label?: string;
   selectedUnit: string;
   units: string[];
   onUnitChange: (unit: string) => void;
@@ -16,7 +16,7 @@ export const UnitPicker: React.FC<UnitPickerProps> = ({
 }) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>{label}</Text>
+      {label ? <Text style={styles.label}>{label}</Text> : null}
       <View style={styles.buttonContainer}>
         {units.map((unit) => (
           <TouchableOpacity

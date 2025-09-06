@@ -8,55 +8,54 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useStorageContext } from '@/hooks/StorageProvider';
+import { useFreezerStorageContext } from '@/hooks/FreezerStorageProvider';
 import { useGlobalUpdate } from '@/hooks/useGlobalUpdate';
-import { calculateHeatLoad } from '@/utils/calculations';
+import { calculateFreezerHeatLoad } from '@/utils/calculations';
 import { generateAndSharePDF, PDFData } from '@/utils/pdfGenerator';
 
-export default function ColdRoomResultsTab() {
-  const { roomData, productData, miscData } = useStorageContext();
+export default function FreezerResultsTab() {
+  const { roomData, productData, miscData } = useFreezerStorageContext();
 
   // Subscribe to global updates for real-time calculation
   useGlobalUpdate();
 
-  const results = calculateHeatLoad(roomData, productData, miscData);
+  const results = calculateFreezerHeatLoad(roomData, productData, miscData);
 
   const handleSharePDF = async () => {
     const pdfData: PDFData = {
-      title: 'Cold Room Heat Load Summary',
-      subtitle: 'Key calculation results for cold room refrigeration system',
+      title: 'Freezer Room Heat Load Summary',
+      subtitle: 'Key calculation results for freezer room refrigeration system',
       sections: [
         {
           title: 'Final Results',
           items: [
-            { label: 'Total Load', value: results.totalLoadTR.toFixed(2), unit: 'TR', isHighlighted: true },
-            { label: 'Capacity with Safety', value: results.capacityTR.toFixed(2), unit: 'TR', isHighlighted: true },
-            { label: 'Total Load', value: results.loadInKw.toFixed(2), unit: 'kW', isHighlighted: true },
-            { label: 'Refrigeration Capacity', value: results.refrigerationCapacity.toFixed(0), unit: 'BTU/hr' },
+            { label: 'Refrigeration Capacity', value: results.refrigerationCapacity.toFixed(1), unit: 'TR', isHighlighted: true },
+            { label: 'Total Load', value: results.totalLoadKw.toFixed(1), unit: 'kW', isHighlighted: true },
+            { label: 'Safety Factor', value: `${results.safetyFactorPercent}%`, unit: '' },
           ]
         },
         {
           title: 'Transmission Loads',
           items: [
-            { label: 'Total Transmission', value: results.totalTransmissionLoad.toFixed(2), unit: 'kW' },
-            { label: 'Wall Load', value: results.wallLoad.toFixed(2), unit: 'kW' },
-            { label: 'Ceiling Load', value: results.ceilingLoad.toFixed(2), unit: 'kW' },
+            { label: 'Total Transmission', value: results.totalTransmissionLoad.toFixed(0), unit: 'Watts' },
+            { label: 'Wall Load', value: results.wallLoad.toFixed(0), unit: 'Watts' },
+            { label: 'Ceiling Load', value: results.ceilingLoad.toFixed(0), unit: 'Watts' },
           ]
         },
         {
           title: 'Product & Other Loads',
           items: [
-            { label: 'Product Load', value: results.productLoad.toFixed(2), unit: 'kW' },
-            { label: 'Total Miscellaneous', value: results.totalMiscLoad.toFixed(2), unit: 'kW' },
-            { label: 'Air Change Load', value: results.airChangeLoad.toFixed(2), unit: 'kW' },
+            { label: 'Product Load', value: results.productLoad.toFixed(0), unit: 'Watts' },
+            { label: 'Occupancy Load', value: results.occupancyLoad.toFixed(0), unit: 'Watts' },
+            { label: 'Air Change Load', value: results.airChangeLoad.toFixed(0), unit: 'Watts' },
           ]
         },
         {
-          title: 'Heat Distribution',
+          title: 'Equipment Loads',
           items: [
-            { label: 'Sensible Heat', value: (results.sensibleHeat / 1000).toFixed(2), unit: 'kW' },
-            { label: 'Latent Heat', value: (results.latentHeat / 1000).toFixed(2), unit: 'kW' },
-            { label: 'Air Quantity Required', value: results.airQtyRequired.toFixed(0), unit: 'CFM' },
+            { label: 'Total Equipment', value: results.totalEquipmentLoad.toFixed(0), unit: 'Watts' },
+            { label: 'Lighting Load', value: results.lightLoad.toFixed(0), unit: 'Watts' },
+            { label: 'Total Misc Load', value: results.totalMiscLoad.toFixed(0), unit: 'Watts' },
           ]
         }
       ]
@@ -92,7 +91,7 @@ export default function ColdRoomResultsTab() {
         <View style={styles.content}>
           <View style={styles.header}>
             <Text style={styles.title}>Final Results</Text>
-            <Text style={styles.subtitle}>Cold room heat load calculation results</Text>
+            <Text style={styles.subtitle}>Freezer heat load calculation results</Text>
 
             {/* PDF Export Button */}
             <TouchableOpacity style={styles.pdfButton} onPress={handleSharePDF}>
@@ -139,14 +138,33 @@ export default function ColdRoomResultsTab() {
             />
           </SectionCard>
 
-          {/* Product Loads */}
-          <SectionCard title="Product Loads">
-            <ResultCard title="Product Load" value={results.productLoad} unit="kW" />
-            <ResultCard title="Respiration Load" value={results.respirationLoad} unit="kW" />
+          {/* Product Loads - Freezer Specific */}
+          <SectionCard title="Product Loads (Freezing Process)">
+            <ResultCard
+              title="Before Freezing Load"
+              value={results.beforeFreezingLoad}
+              unit="kW"
+            />
+            <ResultCard
+              title="Latent Heat Load (Freezing)"
+              value={results.latentHeatLoad}
+              unit="kW"
+            />
+            <ResultCard
+              title="After Freezing Load"
+              value={results.afterFreezingLoad}
+              unit="kW"
+            />
+            <ResultCard
+              title="Total Product Load"
+              value={results.totalProductLoad}
+              unit="kW"
+            />
           </SectionCard>
 
           {/* Other Loads */}
           <SectionCard title="Other Loads">
+            <ResultCard title="Respiration Load" value={results.respirationLoad} unit="kW" />
             <ResultCard title="Air Change Load" value={results.airChangeLoad} unit="kW" />
             <ResultCard title="Equipment Load" value={results.equipmentLoad} unit="kW" />
             <ResultCard title="Lighting Load" value={results.lightLoad} unit="kW" />
@@ -166,10 +184,30 @@ export default function ColdRoomResultsTab() {
             <ResultCard title="Air Quantity Required" value={results.airQtyRequired} unit="CFM" />
           </SectionCard>
 
+          {/* Temperature Differences */}
+          <SectionCard title="Temperature Differences">
+            <ResultCard title="Wall/Ceiling/Floor ΔT" value={results.wallTempDiff} unit="°C" />
+            <ResultCard title="Product ΔT" value={results.productTempDiff} unit="°C" />
+          </SectionCard>
+
+          {/* System Parameters */}
+          <SectionCard title="System Parameters">
+            <ResultCard title="Daily Loading" value={results.dailyLoading || 0} unit="kg/day" />
+            <View style={styles.resultCard}>
+              <Text style={styles.resultLabel}>Insulation Type</Text>
+              <Text style={styles.resultValue}>{results.insulationType || 'PUF'}</Text>
+            </View>
+            <ResultCard
+              title="Insulation Thickness"
+              value={results.insulationThickness || 0}
+              unit="mm"
+            />
+          </SectionCard>
+
           <View style={styles.footer}>
             <Text style={styles.footerText}>Powered by Enzo</Text>
             <Text style={styles.footerSubtext}>
-              Professional cold room heat load calculations following ASHRAE standards
+              Professional freezer heat load calculations following ASHRAE standards
             </Text>
           </View>
         </View>
@@ -196,7 +234,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: '700',
-    color: '#1e293b',
+    color: '#1e40af',
     marginBottom: 8,
   },
   subtitle: {
@@ -244,7 +282,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#1e293b',
+    color: '#1e40af',
     marginBottom: 12,
   },
   resultCard: {
@@ -256,7 +294,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#f1f5f9',
   },
   highlightedCard: {
-    backgroundColor: '#f0fdf4',
+    backgroundColor: '#eff6ff',
     borderRadius: 8,
     paddingHorizontal: 12,
     marginVertical: 4,
@@ -269,7 +307,7 @@ const styles = StyleSheet.create({
   },
   highlightedLabel: {
     fontWeight: '600',
-    color: '#1e293b',
+    color: '#1e40af',
   },
   resultValue: {
     fontSize: 16,
@@ -295,7 +333,7 @@ const styles = StyleSheet.create({
   },
   footerText: {
     fontSize: 16,
-    color: '#1e293b',
+    color: '#1e40af',
     fontWeight: '600',
     marginBottom: 4,
   },
