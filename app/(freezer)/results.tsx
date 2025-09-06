@@ -29,33 +29,39 @@ export default function FreezerResultsTab() {
         {
           title: 'Final Results',
           items: [
-            { label: 'Refrigeration Capacity', value: results.refrigerationCapacity.toFixed(1), unit: 'TR', isHighlighted: true },
-            { label: 'Total Load', value: results.totalLoadKw.toFixed(1), unit: 'kW', isHighlighted: true },
-            { label: 'Safety Factor', value: `${results.safetyFactorPercent}%`, unit: '' },
+            { label: 'Refrigeration Capacity', value: results.totalLoadTR.toFixed(2), unit: 'TR', isHighlighted: true },
+            { label: 'Refrigeration Capacity', value: results.refrigerationCapacity.toFixed(0), unit: 'BTU/hr' },
+            { label: 'Total Load', value: results.loadInKw.toFixed(1), unit: 'kW', isHighlighted: true },
+            { label: 'Capacity with 20% Safety Factor', value: results.capacityTR.toFixed(2), unit: 'TR' },
           ]
         },
         {
           title: 'Transmission Loads',
           items: [
-            { label: 'Total Transmission', value: results.totalTransmissionLoad.toFixed(0), unit: 'Watts' },
-            { label: 'Wall Load', value: results.wallLoad.toFixed(0), unit: 'Watts' },
-            { label: 'Ceiling Load', value: results.ceilingLoad.toFixed(0), unit: 'Watts' },
+            { label: 'Total Transmission', value: results.totalTransmissionLoad.toFixed(3), unit: 'kW' },
+            { label: 'Wall Load', value: results.wallLoad.toFixed(3), unit: 'kW' },
+            { label: 'Ceiling Load', value: results.ceilingLoad.toFixed(3), unit: 'kW' },
+            { label: 'Floor Load', value: results.floorLoad.toFixed(3), unit: 'kW' },
           ]
         },
         {
-          title: 'Product & Other Loads',
+          title: 'Product Loads (Freezing Process)',
           items: [
-            { label: 'Product Load', value: results.productLoad.toFixed(0), unit: 'Watts' },
-            { label: 'Occupancy Load', value: results.occupancyLoad.toFixed(0), unit: 'Watts' },
-            { label: 'Air Change Load', value: results.airChangeLoad.toFixed(0), unit: 'Watts' },
+            { label: 'Before Freezing Load', value: results.beforeFreezingLoad.toFixed(3), unit: 'kW' },
+            { label: 'Latent Heat Load', value: results.latentHeatLoad.toFixed(3), unit: 'kW' },
+            { label: 'After Freezing Load', value: results.afterFreezingLoad.toFixed(3), unit: 'kW' },
+            { label: 'Total Product Load', value: results.totalProductLoad.toFixed(3), unit: 'kW' },
           ]
         },
         {
-          title: 'Equipment Loads',
+          title: 'Other Loads',
           items: [
-            { label: 'Total Equipment', value: results.totalEquipmentLoad.toFixed(0), unit: 'Watts' },
-            { label: 'Lighting Load', value: results.lightLoad.toFixed(0), unit: 'Watts' },
-            { label: 'Total Misc Load', value: results.totalMiscLoad.toFixed(0), unit: 'Watts' },
+            { label: 'Respiration Load', value: results.respirationLoad.toFixed(3), unit: 'kW' },
+            { label: 'Air Change Load', value: results.airChangeLoad.toFixed(3), unit: 'kW' },
+            { label: 'Equipment Load', value: results.equipmentLoad.toFixed(3), unit: 'kW' },
+            { label: 'Lighting Load', value: results.lightLoad.toFixed(3), unit: 'kW' },
+            { label: 'Heater Load', value: results.heaterLoad.toFixed(3), unit: 'kW' },
+            { label: 'Total Misc Load', value: results.totalMiscLoad.toFixed(3), unit: 'kW' },
           ]
         }
       ]
@@ -118,6 +124,11 @@ export default function FreezerResultsTab() {
               title="Total Load"
               value={results.loadInKw}
               unit="kW"
+            />
+            <ResultCard
+              title="Refrigeration Capacity"
+              value={results.totalLoadTR}
+              unit="TR"
             />
             <ResultCard
               title="Refrigeration Capacity"

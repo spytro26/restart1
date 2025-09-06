@@ -14,6 +14,10 @@ export default function RootLayout() {
       <FreezerStorageProvider>
         <BlastStorageProvider>
           <Stack screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="index" options={{ headerShown: false }} />
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="(freezer)" options={{ headerShown: false }} />
+            <Stack.Screen name="(blast)" options={{ headerShown: false }} />
             <Stack.Screen name="+not-found" />
           </Stack>
           <StatusBar style="auto" />
