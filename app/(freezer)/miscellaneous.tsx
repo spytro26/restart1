@@ -46,7 +46,7 @@ export default function FreezerMiscellaneousTab() {
                   label="Ambient Temperature"
                   value={miscData.ambientTemp.toString()}
                   onChangeText={(value) => handleValueChange('ambientTemp', value)}
-                  keyboardType="numeric"
+                  keyboardType="decimal-pad"
                   placeholder="45"
                 />
               </View>
@@ -65,7 +65,7 @@ export default function FreezerMiscellaneousTab() {
                   label="Freezer Room Temperature"
                   value={miscData.roomTemp.toString()}
                   onChangeText={(value) => handleValueChange('roomTemp', value)}
-                  keyboardType="numeric"
+                  keyboardType="decimal-pad"
                   placeholder="-25"
                 />
               </View>
@@ -80,7 +80,7 @@ export default function FreezerMiscellaneousTab() {
                   label="Product Incoming Temperature"
                   value={miscData.productIncoming.toString()}
                   onChangeText={(value) => handleValueChange('productIncoming', value)}
-                  keyboardType="numeric"
+                  keyboardType="decimal-pad"
                   placeholder="25"
                 />
               </View>
@@ -95,7 +95,7 @@ export default function FreezerMiscellaneousTab() {
                   label="Product Final Temperature"
                   value={miscData.productOutgoing.toString()}
                   onChangeText={(value) => handleValueChange('productOutgoing', value)}
-                  keyboardType="numeric"
+                  keyboardType="decimal-pad"
                   placeholder="-15"
                 />
               </View>
@@ -112,7 +112,7 @@ export default function FreezerMiscellaneousTab() {
               label="Air Change Rate"
               value={miscData.airChangeRate.toString()}
               onChangeText={(value) => handleValueChange('airChangeRate', value)}
-              keyboardType="numeric"
+              keyboardType="decimal-pad"
               placeholder="0.4"
               unit="L/S"
             />
@@ -121,7 +121,7 @@ export default function FreezerMiscellaneousTab() {
               label="Enthalpy Difference"
               value={miscData.enthalpyDiff.toString()}
               onChangeText={(value) => handleValueChange('enthalpyDiff', value)}
-              keyboardType="numeric"
+              keyboardType="decimal-pad"
               placeholder="0.1203"
               unit="kJ/L"
             />
@@ -130,7 +130,7 @@ export default function FreezerMiscellaneousTab() {
               label="Hours of Load"
               value={miscData.hoursOfLoad.toString()}
               onChangeText={(value) => handleValueChange('hoursOfLoad', value)}
-              keyboardType="numeric"
+              keyboardType="decimal-pad"
               placeholder="16"
               unit="hrs"
             />
@@ -143,7 +143,7 @@ export default function FreezerMiscellaneousTab() {
               label="Equipment Power"
               value={miscData.equipmentPower.toString()}
               onChangeText={(value) => handleValueChange('equipmentPower', value)}
-              keyboardType="numeric"
+              keyboardType="decimal-pad"
               placeholder="407"
               unit="W"
             />
@@ -152,7 +152,7 @@ export default function FreezerMiscellaneousTab() {
               label="Equipment Usage Hours"
               value={miscData.equipmentUsageHours.toString()}
               onChangeText={(value) => handleValueChange('equipmentUsageHours', value)}
-              keyboardType="numeric"
+              keyboardType="decimal-pad"
               placeholder="16"
               unit="hrs"
             />
@@ -165,7 +165,7 @@ export default function FreezerMiscellaneousTab() {
               label="Light Power"
               value={miscData.lightPower.toString()}
               onChangeText={(value) => handleValueChange('lightPower', value)}
-              keyboardType="numeric"
+              keyboardType="decimal-pad"
               placeholder="140"
               unit="W"
             />
@@ -174,7 +174,7 @@ export default function FreezerMiscellaneousTab() {
               label="Light Usage Hours"
               value={miscData.lightUsageHours.toString()}
               onChangeText={(value) => handleValueChange('lightUsageHours', value)}
-              keyboardType="numeric"
+              keyboardType="decimal-pad"
               placeholder="16"
               unit="hrs"
             />
@@ -187,7 +187,7 @@ export default function FreezerMiscellaneousTab() {
               label="Peripheral Heaters"
               value={miscData.peripheralHeaters.toString()}
               onChangeText={(value) => handleValueChange('peripheralHeaters', value)}
-              keyboardType="numeric"
+              keyboardType="decimal-pad"
               placeholder="0"
               unit="W"
             />
@@ -196,7 +196,7 @@ export default function FreezerMiscellaneousTab() {
               label="Door Heaters"
               value={miscData.doorHeaters.toString()}
               onChangeText={(value) => handleValueChange('doorHeaters', value)}
-              keyboardType="numeric"
+              keyboardType="decimal-pad"
               placeholder="243"
               unit="W"
             />
@@ -205,7 +205,7 @@ export default function FreezerMiscellaneousTab() {
               label="Tray Heaters"
               value={miscData.trayHeaters.toString()}
               onChangeText={(value) => handleValueChange('trayHeaters', value)}
-              keyboardType="numeric"
+              keyboardType="decimal-pad"
               placeholder="0"
               unit="W"
             />
@@ -218,7 +218,7 @@ export default function FreezerMiscellaneousTab() {
               label="Number of People"
               value={miscData.occupancyCount.toString()}
               onChangeText={(value) => handleValueChange('occupancyCount', value)}
-              keyboardType="numeric"
+              keyboardType="decimal-pad"
               placeholder="0"
               unit="people"
             />
@@ -227,7 +227,7 @@ export default function FreezerMiscellaneousTab() {
               label="Heat Equivalent per Person"
               value={miscData.occupancyHeatEquiv.toString()}
               onChangeText={(value) => handleValueChange('occupancyHeatEquiv', value)}
-              keyboardType="numeric"
+              keyboardType="decimal-pad"
               placeholder="0"
               unit="W"
             />
@@ -236,7 +236,7 @@ export default function FreezerMiscellaneousTab() {
               label="Occupancy Usage Hours"
               value={miscData.occupancyUsageHours.toString()}
               onChangeText={(value) => handleValueChange('occupancyUsageHours', value)}
-              keyboardType="numeric"
+              keyboardType="decimal-pad"
               placeholder="0"
               unit="hrs"
             />

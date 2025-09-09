@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 
 interface InputFieldProps {
@@ -26,18 +26,69 @@ export const InputField: React.FC<InputFieldProps> = ({
   onUnitChange,
   editable = true,
 }) => {
+  // Local buffer so the user can type transitional states (e.g., '.') without being reset by parent
+  const [isFocused, setIsFocused] = useState(false);
+  const [localText, setLocalText] = useState<string>(value ?? '');
+
+  // Keep local text in sync when not focused and parent value changes
+  useEffect(() => {
+    if (!isFocused) {
+      setLocalText(value ?? '');
+    }
+  }, [value, isFocused]);
+
+  // Regex allowing only non-negative decimals during typing (no minus)
+  const partialDecimalRegex = useMemo(() => /^\d*\.?\d*$/,
+    []);
+  const fullDecimalRegex = useMemo(() => /^\d+(?:\.\d+)?$/,
+    []);
+
+  const handleTextChange = (text: string) => {
+    if (keyboardType === 'decimal-pad' || keyboardType === 'numeric') {
+      // Allow transitional states: '', '.', '12.', '12.3'
+      if (text === '' || text === '.' || partialDecimalRegex.test(text)) {
+        setLocalText(text);
+        // Only propagate to parent when it's a complete number like '12' or '12.3'
+        if (fullDecimalRegex.test(text)) {
+          onChangeText(text);
+        }
+        return;
+      }
+      // Ignore any other characters (including '-')
+      return;
+    }
+    // Non-numeric inputs
+    setLocalText(text);
+    onChangeText(text);
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{label}</Text>
       <View style={styles.inputContainer}>
         <TextInput
           style={[styles.input, (unit || unitOptions) && styles.inputWithUnit]}
-          value={value}
-          onChangeText={onChangeText}
+          value={isFocused ? localText : value}
+          onChangeText={handleTextChange}
           placeholder={placeholder}
           keyboardType={keyboardType}
+          onFocus={() => {
+            setIsFocused(true);
+            setLocalText(value ?? '');
+          }}
+          onBlur={() => {
+            setIsFocused(false);
+            // On blur, if the text is a valid number propagate, else fallback to 0 or keep as-is if empty
+            if (fullDecimalRegex.test(localText)) {
+              onChangeText(localText);
+            } else if (localText === '' || localText === '.') {
+              onChangeText('0');
+            }
+          }}
           placeholderTextColor="#64748b"
           editable={editable}
+          autoCorrect={false}
+          spellCheck={false}
         />
         {unitOptions && selectedUnit && onUnitChange ? (
           <View style={styles.unitPickerContainer}>

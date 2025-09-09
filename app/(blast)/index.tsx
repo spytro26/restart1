@@ -36,7 +36,7 @@ export default function BlastRoomDetailsTab() {
                             label="U-Factor"
                             value={roomData.wallUFactor.toString()}
                             onChangeText={(value) => handleValueChange('wallUFactor', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="0.153"
                             unit="W/m²·K"
                         />
@@ -45,7 +45,7 @@ export default function BlastRoomDetailsTab() {
                             label="Area"
                             value={roomData.wallArea.toString()}
                             onChangeText={(value) => handleValueChange('wallArea', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="70"
                             unit="m²"
                         />
@@ -54,7 +54,7 @@ export default function BlastRoomDetailsTab() {
                             label="Temperature Difference"
                             value={roomData.wallTempDiff.toString()}
                             onChangeText={(value) => handleValueChange('wallTempDiff', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="78"
                             unit="K"
                         />
@@ -63,7 +63,7 @@ export default function BlastRoomDetailsTab() {
                             label="Hours of Load"
                             value={roomData.wallHours.toString()}
                             onChangeText={(value) => handleValueChange('wallHours', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="8"
                             unit="hrs"
                         />
@@ -76,7 +76,7 @@ export default function BlastRoomDetailsTab() {
                             label="U-Factor"
                             value={roomData.ceilingUFactor.toString()}
                             onChangeText={(value) => handleValueChange('ceilingUFactor', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="0.153"
                             unit="W/m²·K"
                         />
@@ -85,7 +85,7 @@ export default function BlastRoomDetailsTab() {
                             label="Area"
                             value={roomData.ceilingArea.toString()}
                             onChangeText={(value) => handleValueChange('ceilingArea', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="25"
                             unit="m²"
                         />
@@ -94,7 +94,7 @@ export default function BlastRoomDetailsTab() {
                             label="Temperature Difference"
                             value={roomData.ceilingTempDiff.toString()}
                             onChangeText={(value) => handleValueChange('ceilingTempDiff', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="78"
                             unit="K"
                         />
@@ -103,7 +103,7 @@ export default function BlastRoomDetailsTab() {
                             label="Hours of Load"
                             value={roomData.ceilingHours.toString()}
                             onChangeText={(value) => handleValueChange('ceilingHours', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="8"
                             unit="hrs"
                         />
@@ -116,7 +116,7 @@ export default function BlastRoomDetailsTab() {
                             label="U-Factor"
                             value={roomData.floorUFactor.toString()}
                             onChangeText={(value) => handleValueChange('floorUFactor', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="0.153"
                             unit="W/m²·K"
                         />
@@ -125,7 +125,7 @@ export default function BlastRoomDetailsTab() {
                             label="Area"
                             value={roomData.floorArea.toString()}
                             onChangeText={(value) => handleValueChange('floorArea', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="25"
                             unit="m²"
                         />
@@ -134,7 +134,7 @@ export default function BlastRoomDetailsTab() {
                             label="Temperature Difference"
                             value={roomData.floorTempDiff.toString()}
                             onChangeText={(value) => handleValueChange('floorTempDiff', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="63"
                             unit="K"
                         />
@@ -143,7 +143,7 @@ export default function BlastRoomDetailsTab() {
                             label="Hours of Load"
                             value={roomData.floorHours.toString()}
                             onChangeText={(value) => handleValueChange('floorHours', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="8"
                             unit="hrs"
                         />

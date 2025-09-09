@@ -17,44 +17,232 @@ export const freezerProducts: FreezerProductPreset[] = [
     freezingPoint: -0.8,
     respirationWatts: 0,
   },
+  
+  // Dairy Products
   {
-    name: 'Meat',
-    cpAboveFreezing: 3.74,  // Typical for meat
-    cpBelowFreezing: 1.96,
-    latentHeatOfFusion: 233, // Typical for meat
-    freezingPoint: -0.8,
-    respirationWatts: 0,     // No respiration when frozen
-  },
-  {
-    name: 'Fish',
-    cpAboveFreezing: 3.68,   // Typical for fish
-    cpBelowFreezing: 1.89,
-    latentHeatOfFusion: 245, // Higher water content
-    freezingPoint: -1.2,
+    name: 'Butter',
+    cpAboveFreezing: 2.4,
+    cpBelowFreezing: 1.3,
+    latentHeatOfFusion: 120,
+    freezingPoint: -3.2,
     respirationWatts: 0,
   },
   {
-    name: 'Poultry',
-    cpAboveFreezing: 3.52,
-    cpBelowFreezing: 1.84,
-    latentHeatOfFusion: 218,
-    freezingPoint: -0.6,
+    name: 'Cheese Fat',
+    cpAboveFreezing: 2.8,
+    cpBelowFreezing: 1.5,
+    latentHeatOfFusion: 160,
+    freezingPoint: -2.8,
     respirationWatts: 0,
   },
   {
-    name: 'Vegetables',
-    cpAboveFreezing: 3.89,   // Higher water content
-    cpBelowFreezing: 2.05,
-    latentHeatOfFusion: 280, // High water content
+    name: 'Cheese Lean',
+    cpAboveFreezing: 3.2,
+    cpBelowFreezing: 1.7,
+    latentHeatOfFusion: 200,
+    freezingPoint: -1.8,
+    respirationWatts: 0,
+  },
+  {
+    name: 'Curd',
+    cpAboveFreezing: 3.6,
+    cpBelowFreezing: 1.9,
+    latentHeatOfFusion: 220,
+    freezingPoint: -1.5,
+    respirationWatts: 0,
+  },
+  {
+    name: 'Margarine',
+    cpAboveFreezing: 2.5,
+    cpBelowFreezing: 1.4,
+    latentHeatOfFusion: 130,
+    freezingPoint: -3.0,
+    respirationWatts: 0,
+  },
+  {
+    name: 'Milk',
+    cpAboveFreezing: 3.9,
+    cpBelowFreezing: 2.0,
+    latentHeatOfFusion: 270,
     freezingPoint: -0.5,
     respirationWatts: 0,
   },
   {
     name: 'Ice Cream',
-    cpAboveFreezing: 3.14,   // Dairy product
+    cpAboveFreezing: 3.14,
     cpBelowFreezing: 1.72,
-    latentHeatOfFusion: 196, // Lower water content due to sugars/fats
-    freezingPoint: -2.8,     // Lower due to sugars
+    latentHeatOfFusion: 196,
+    freezingPoint: -2.8,
+    respirationWatts: 0,
+  },
+
+  // Meat & Poultry
+  {
+    name: 'Meat',
+    cpAboveFreezing: 3.74,
+    cpBelowFreezing: 1.96,
+    latentHeatOfFusion: 233,
+    freezingPoint: -0.8,
+    respirationWatts: 0,
+  },
+  {
+    name: 'Chicken',
+    cpAboveFreezing: 3.4,
+    cpBelowFreezing: 1.8,
+    latentHeatOfFusion: 215,
+    freezingPoint: -0.7,
+    respirationWatts: 0,
+  },
+  {
+    name: 'Pig Fat',
+    cpAboveFreezing: 2.8,
+    cpBelowFreezing: 1.5,
+    latentHeatOfFusion: 180,
+    freezingPoint: -1.2,
+    respirationWatts: 0,
+  },
+  {
+    name: 'Pig Lean',
+    cpAboveFreezing: 3.6,
+    cpBelowFreezing: 1.9,
+    latentHeatOfFusion: 240,
+    freezingPoint: -0.6,
+    respirationWatts: 0,
+  },
+
+  // Fish & Seafood
+  {
+    name: 'Fish',
+    cpAboveFreezing: 3.68,
+    cpBelowFreezing: 1.89,
+    latentHeatOfFusion: 245,
+    freezingPoint: -1.2,
+    respirationWatts: 0,
+  },
+  {
+    name: 'Sea Fish Fat',
+    cpAboveFreezing: 3.4,
+    cpBelowFreezing: 1.7,
+    latentHeatOfFusion: 220,
+    freezingPoint: -1.5,
+    respirationWatts: 0,
+  },
+  {
+    name: 'Sea Fish Lean',
+    cpAboveFreezing: 3.8,
+    cpBelowFreezing: 1.9,
+    latentHeatOfFusion: 260,
+    freezingPoint: -1.0,
+    respirationWatts: 0,
+  },
+  {
+    name: 'Sea Fish Smoked',
+    cpAboveFreezing: 3.2,
+    cpBelowFreezing: 1.6,
+    latentHeatOfFusion: 190,
+    freezingPoint: -2.0,
+    respirationWatts: 0,
+  },
+  {
+    name: 'Shell Fish',
+    cpAboveFreezing: 3.9,
+    cpBelowFreezing: 2.0,
+    latentHeatOfFusion: 280,
+    freezingPoint: -0.8,
+    respirationWatts: 0,
+  },
+
+  // Vegetables (Frozen)
+  {
+    name: 'Vegetables',
+    cpAboveFreezing: 3.89,
+    cpBelowFreezing: 2.05,
+    latentHeatOfFusion: 280,
+    freezingPoint: -0.5,
+    respirationWatts: 0,
+  },
+  {
+    name: 'Beans (Frozen)',
+    cpAboveFreezing: 3.2,
+    cpBelowFreezing: 1.7,
+    latentHeatOfFusion: 250,
+    freezingPoint: -0.6,
+    respirationWatts: 0,
+  },
+  {
+    name: 'Carrots (Frozen)',
+    cpAboveFreezing: 3.6,
+    cpBelowFreezing: 1.9,
+    latentHeatOfFusion: 270,
+    freezingPoint: -0.5,
+    respirationWatts: 0,
+  },
+  {
+    name: 'Peas (Frozen)',
+    cpAboveFreezing: 3.4,
+    cpBelowFreezing: 1.8,
+    latentHeatOfFusion: 260,
+    freezingPoint: -0.6,
+    respirationWatts: 0,
+  },
+  {
+    name: 'Potato (Frozen)',
+    cpAboveFreezing: 3.5,
+    cpBelowFreezing: 1.8,
+    latentHeatOfFusion: 270,
+    freezingPoint: -0.4,
+    respirationWatts: 0,
+  },
+
+  // Fruits (Frozen)
+  {
+    name: 'Apple (Frozen)',
+    cpAboveFreezing: 3.6,
+    cpBelowFreezing: 1.9,
+    latentHeatOfFusion: 275,
+    freezingPoint: -0.8,
+    respirationWatts: 0,
+  },
+  {
+    name: 'Banana (Frozen)',
+    cpAboveFreezing: 3.6,
+    cpBelowFreezing: 1.9,
+    latentHeatOfFusion: 270,
+    freezingPoint: -0.7,
+    respirationWatts: 0,
+  },
+  {
+    name: 'Strawberries (Frozen)',
+    cpAboveFreezing: 3.8,
+    cpBelowFreezing: 2.0,
+    latentHeatOfFusion: 285,
+    freezingPoint: -0.6,
+    respirationWatts: 0,
+  },
+
+  // Other Products
+  {
+    name: 'Bread (Frozen)',
+    cpAboveFreezing: 2.8,
+    cpBelowFreezing: 1.5,
+    latentHeatOfFusion: 210,
+    freezingPoint: -2.0,
+    respirationWatts: 0,
+  },
+  {
+    name: 'Dough (Frozen)',
+    cpAboveFreezing: 3.2,
+    cpBelowFreezing: 1.7,
+    latentHeatOfFusion: 240,
+    freezingPoint: -1.5,
+    respirationWatts: 0,
+  },
+  {
+    name: 'Eggs (Frozen)',
+    cpAboveFreezing: 3.1,
+    cpBelowFreezing: 1.6,
+    latentHeatOfFusion: 200,
+    freezingPoint: -1.8,
     respirationWatts: 0,
   },
 ];

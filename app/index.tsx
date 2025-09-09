@@ -7,6 +7,7 @@ import {
     SafeAreaView,
     StatusBar,
     Dimensions,
+    Image,
 } from 'react-native';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -55,8 +56,13 @@ export default function HomePage() {
             <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
 
             <View style={styles.content}>
-                {/* App Title */}
+                {/* Logo and App Title */}
                 <View style={styles.titleContainer}>
+                    <Image
+                        source={require('@/assets/images/logo.png')}
+                        style={styles.logo}
+                        resizeMode="contain"
+                    />
                     <Text style={styles.appTitle}>
                         <Text style={styles.enzo}>Enzo</Text>
                         <Text style={styles.coolCalc}> CoolCalc</Text>
@@ -104,6 +110,11 @@ const styles = StyleSheet.create({
     titleContainer: {
         alignItems: 'center',
         marginBottom: height * 0.1,
+    },
+    logo: {
+        width: width * 0.3,
+        height: width * 0.3,
+        marginBottom: 20,
     },
     appTitle: {
         textAlign: 'center',

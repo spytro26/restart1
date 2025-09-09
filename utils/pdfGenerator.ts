@@ -81,86 +81,88 @@ const generateHTMLContent = (data: PDFData): string => {
         
         @page { 
           size: A4; 
-          margin: 10mm; 
+          margin: 8mm; 
         }
         
         body {
           font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
-          line-height: 1.3;
+          line-height: 1.2;
           color: #1a202c;
           background: #ffffff;
-          font-size: 11px;
+          font-size: 10px;
           height: 100vh;
           display: flex;
           flex-direction: column;
+          max-height: 277mm; /* A4 height minus margins */
         }
         
-        /* Header Section - Keep as is */
+        /* Header Section - Reduced size */
         .header {
           text-align: center;
-          margin-bottom: 6mm;
-          padding: 6mm 4mm 4mm 4mm;
+          margin-bottom: 4mm;
+          padding: 4mm 3mm 3mm 3mm;
           background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #60a5fa 100%);
           color: white;
-          border-radius: 8px;
-          box-shadow: 0 4px 20px rgba(30, 58, 138, 0.3);
+          border-radius: 6px;
+          box-shadow: 0 2px 10px rgba(30, 58, 138, 0.2);
         }
         
         .brand-title {
-          font-size: 22px;
+          font-size: 18px;
           font-weight: 800;
-          margin-bottom: 3mm;
+          margin-bottom: 2mm;
           text-transform: uppercase;
-          letter-spacing: 2px;
-          text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+          letter-spacing: 1.5px;
+          text-shadow: 0 1px 3px rgba(0,0,0,0.3);
         }
         
         .report-title {
-          font-size: 14px;
+          font-size: 12px;
           font-weight: 500;
           opacity: 0.9;
         }
         
-        /* Final Load Section - Keep as is */
+        /* Final Load Section - Reduced size */
         .final-load-section {
           text-align: center;
-          margin-bottom: 6mm;
-          padding: 5mm;
+          margin-bottom: 4mm;
+          padding: 3mm;
           background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
-          border-radius: 12px;
-          box-shadow: 0 6px 25px rgba(37, 99, 235, 0.25);
+          border-radius: 8px;
+          box-shadow: 0 3px 15px rgba(37, 99, 235, 0.2);
         }
         
         .final-load-label {
-          font-size: 13px;
+          font-size: 11px;
           font-weight: 600;
           color: rgba(255,255,255,0.9);
-          margin-bottom: 2mm;
+          margin-bottom: 1mm;
           text-transform: uppercase;
-          letter-spacing: 1px;
+          letter-spacing: 0.8px;
         }
         
         .final-load-value {
-          font-size: 28px;
+          font-size: 22px;
           font-weight: 900;
           color: white;
-          text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+          text-shadow: 0 1px 5px rgba(0,0,0,0.3);
         }
         
-        /* Main Results Table - NEW DESIGN */
+        /* Main Results Table - Optimized for single page */
         .results-container {
           flex: 1;
-          margin-bottom: 4mm;
+          margin-bottom: 3mm;
           background: white;
-          border-radius: 8px;
+          border-radius: 6px;
           overflow: hidden;
-          box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+          box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+          max-height: calc(100vh - 140mm); /* Ensure it fits */
         }
         
         .results-table {
           width: 100%;
           border-collapse: collapse;
-          font-size: 10px;
+          font-size: 9px;
         }
         
         .section-header {
@@ -168,22 +170,18 @@ const generateHTMLContent = (data: PDFData): string => {
         }
         
         .section-title {
-          padding: 3mm 4mm;
+          padding: 2mm 3mm;
           font-weight: 700;
-          font-size: 11px;
+          font-size: 10px;
           color: #1e293b;
           text-transform: uppercase;
-          letter-spacing: 0.5px;
-          border-bottom: 2px solid #e2e8f0;
+          letter-spacing: 0.3px;
+          border-bottom: 1px solid #e2e8f0;
           text-align: left;
         }
         
         .result-row {
           transition: background-color 0.2s ease;
-        }
-        
-        .result-row:hover {
-          background: #f8fafc;
         }
         
         .result-row.highlighted {
@@ -192,8 +190,8 @@ const generateHTMLContent = (data: PDFData): string => {
         }
         
         .result-row td {
-          padding: 2.5mm 4mm;
-          border-bottom: 1px solid #f1f5f9;
+          padding: 1.5mm 3mm;
+          border-bottom: 1px solid #f8fafc;
           vertical-align: middle;
         }
         
@@ -211,14 +209,14 @@ const generateHTMLContent = (data: PDFData): string => {
         .result-value {
           color: #2563eb;
           font-weight: 700;
-          font-size: 11px;
+          font-size: 9px;
           text-align: right;
           width: 25%;
         }
         
         .highlighted .result-value {
           color: #1d4ed8;
-          font-size: 12px;
+          font-size: 10px;
         }
         
         .result-unit {
@@ -226,7 +224,7 @@ const generateHTMLContent = (data: PDFData): string => {
           font-weight: 500;
           text-align: left;
           width: 15%;
-          padding-left: 2mm;
+          padding-left: 1.5mm;
         }
         
         .highlighted .result-unit {
@@ -237,23 +235,25 @@ const generateHTMLContent = (data: PDFData): string => {
         .result-status {
           color: #10b981;
           font-weight: 900;
-          font-size: 14px;
+          font-size: 12px;
           text-align: center;
           width: 10%;
         }
         
-        /* Footer */
+        /* Footer - Fixed at bottom */
         .footer {
           margin-top: auto;
-          padding: 3mm 4mm;
+          padding: 2mm 3mm;
           background: linear-gradient(90deg, #f8fafc 0%, #f1f5f9 100%);
-          border-radius: 6px;
+          border-radius: 4px;
           display: flex;
           justify-content: space-between;
           align-items: center;
           border: 1px solid #e2e8f0;
-          font-size: 9px;
+          font-size: 8px;
           color: #64748b;
+          height: 8mm; /* Fixed height */
+          flex-shrink: 0; /* Prevent shrinking */
         }
         
         .footer-left {
@@ -268,21 +268,32 @@ const generateHTMLContent = (data: PDFData): string => {
         /* Print optimizations */
         @media print {
           body { 
-            font-size: 10px; 
+            font-size: 9px; 
             -webkit-print-color-adjust: exact;
             color-adjust: exact;
+            max-height: 277mm;
           }
           
-          .brand-title { font-size: 20px; }
-          .final-load-value { font-size: 26px; }
-          .results-table { font-size: 9px; }
-          .section-title { font-size: 10px; }
-          .result-value { font-size: 10px; }
-          .highlighted .result-value { font-size: 11px; }
+          .brand-title { font-size: 16px; }
+          .final-load-value { font-size: 20px; }
+          .results-table { font-size: 8px; }
+          .section-title { font-size: 9px; }
+          .result-value { font-size: 8px; }
+          .highlighted .result-value { font-size: 9px; }
           
           .results-container {
             break-inside: avoid;
             page-break-inside: avoid;
+            max-height: calc(100vh - 120mm);
+          }
+          
+          .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            page-break-inside: avoid;
+            break-inside: avoid;
           }
         }
       </style>

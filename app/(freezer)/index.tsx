@@ -46,7 +46,7 @@ export default function FreezerRoomDetailsTab() {
                   label="Length"
                   value={roomData.length.toString()}
                   onChangeText={(value) => handleValueChange('length', value)}
-                  keyboardType="numeric"
+                  keyboardType="decimal-pad"
                   placeholder="0"
                 />
               </View>
@@ -65,7 +65,7 @@ export default function FreezerRoomDetailsTab() {
                   label="Width"
                   value={roomData.width.toString()}
                   onChangeText={(value) => handleValueChange('width', value)}
-                  keyboardType="numeric"
+                  keyboardType="decimal-pad"
                   placeholder="0"
                 />
               </View>
@@ -80,7 +80,7 @@ export default function FreezerRoomDetailsTab() {
                   label="Height"
                   value={roomData.height.toString()}
                   onChangeText={(value) => handleValueChange('height', value)}
-                  keyboardType="numeric"
+                  keyboardType="decimal-pad"
                   placeholder="0"
                 />
               </View>
@@ -98,7 +98,7 @@ export default function FreezerRoomDetailsTab() {
               label="Wall U-Factor"
               value={roomData.wallUFactor.toString()}
               onChangeText={(value) => handleValueChange('wallUFactor', value)}
-              keyboardType="numeric"
+              keyboardType="decimal-pad"
               placeholder="0.295"
               unit="W/m²·K"
             />
@@ -107,7 +107,7 @@ export default function FreezerRoomDetailsTab() {
               label="Ceiling U-Factor"
               value={roomData.ceilingUFactor.toString()}
               onChangeText={(value) => handleValueChange('ceilingUFactor', value)}
-              keyboardType="numeric"
+              keyboardType="decimal-pad"
               placeholder="0.295"
               unit="W/m²·K"
             />
@@ -116,7 +116,7 @@ export default function FreezerRoomDetailsTab() {
               label="Floor U-Factor"
               value={roomData.floorUFactor.toString()}
               onChangeText={(value) => handleValueChange('floorUFactor', value)}
-              keyboardType="numeric"
+              keyboardType="decimal-pad"
               placeholder="0.295"
               unit="W/m²·K"
             />
@@ -130,7 +130,7 @@ export default function FreezerRoomDetailsTab() {
               label="Wall Hours"
               value={roomData.wallHours.toString()}
               onChangeText={(value) => handleValueChange('wallHours', value)}
-              keyboardType="numeric"
+              keyboardType="decimal-pad"
               placeholder="24"
               unit="hrs"
             />
@@ -139,7 +139,7 @@ export default function FreezerRoomDetailsTab() {
               label="Ceiling Hours"
               value={roomData.ceilingHours.toString()}
               onChangeText={(value) => handleValueChange('ceilingHours', value)}
-              keyboardType="numeric"
+              keyboardType="decimal-pad"
               placeholder="24"
               unit="hrs"
             />
@@ -148,7 +148,7 @@ export default function FreezerRoomDetailsTab() {
               label="Floor Hours"
               value={roomData.floorHours.toString()}
               onChangeText={(value) => handleValueChange('floorHours', value)}
-              keyboardType="numeric"
+              keyboardType="decimal-pad"
               placeholder="24"
               unit="hrs"
             />

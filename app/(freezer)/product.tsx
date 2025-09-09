@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { InputField } from '@/components/InputField';
 import { UnitPicker } from '@/components/UnitPicker';
-import { ProductPicker } from '@/components/ProductPicker';
+import { FreezerProductPicker } from '@/components/FreezerProductPicker';
 import { useFreezerStorageContext } from '@/hooks/FreezerStorageProvider';
 import { freezerProducts } from '@/data/freezerProducts';
 
@@ -58,7 +58,7 @@ export default function FreezerProductTab() {
 
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Product Selection</Text>
-            <ProductPicker
+            <FreezerProductPicker
               selected={productData.productName || 'Custom'}
               onSelect={handleProductSelect}
             />
@@ -73,7 +73,7 @@ export default function FreezerProductTab() {
                   label="Mass Before Freezing"
                   value={productData.massBeforeFreezing.toString()}
                   onChangeText={(value) => handleValueChange('massBeforeFreezing', value)}
-                  keyboardType="numeric"
+                  keyboardType="decimal-pad"
                   placeholder="3000"
                 />
               </View>
@@ -92,7 +92,7 @@ export default function FreezerProductTab() {
                   label="Respiration Mass"
                   value={productData.respirationMass.toString()}
                   onChangeText={(value) => handleValueChange('respirationMass', value)}
-                  keyboardType="numeric"
+                  keyboardType="decimal-pad"
                   placeholder="3000"
                 />
               </View>
@@ -109,7 +109,7 @@ export default function FreezerProductTab() {
               label="Cp Above Freezing"
               value={productData.cpAboveFreezing.toString()}
               onChangeText={(value) => handleValueChange('cpAboveFreezing', value)}
-              keyboardType="numeric"
+              keyboardType="decimal-pad"
               placeholder="3.74"
               unit="kJ/kg·K"
               editable={productData.overridePreset || productData.productName === 'Custom'}
@@ -119,7 +119,7 @@ export default function FreezerProductTab() {
               label="Cp Below Freezing"
               value={productData.cpBelowFreezing.toString()}
               onChangeText={(value) => handleValueChange('cpBelowFreezing', value)}
-              keyboardType="numeric"
+              keyboardType="decimal-pad"
               placeholder="1.96"
               unit="kJ/kg·K"
               editable={productData.overridePreset || productData.productName === 'Custom'}
@@ -129,7 +129,7 @@ export default function FreezerProductTab() {
               label="Latent Heat of Fusion"
               value={productData.latentHeatOfFusion.toString()}
               onChangeText={(value) => handleValueChange('latentHeatOfFusion', value)}
-              keyboardType="numeric"
+              keyboardType="decimal-pad"
               placeholder="233"
               unit="kJ/kg"
               editable={productData.overridePreset || productData.productName === 'Custom'}
@@ -139,7 +139,7 @@ export default function FreezerProductTab() {
               label="Freezing Point"
               value={productData.freezingPoint.toString()}
               onChangeText={(value) => handleValueChange('freezingPoint', value)}
-              keyboardType="numeric"
+              keyboardType="decimal-pad"
               placeholder="-0.8"
               unit="°C"
               editable={productData.overridePreset || productData.productName === 'Custom'}
@@ -153,7 +153,7 @@ export default function FreezerProductTab() {
               label="Pull Down Hours (per phase)"
               value={productData.pullDownHours.toString()}
               onChangeText={(value) => handleValueChange('pullDownHours', value)}
-              keyboardType="numeric"
+              keyboardType="decimal-pad"
               placeholder="10"
               unit="hrs"
             />
@@ -162,7 +162,7 @@ export default function FreezerProductTab() {
               label="Respiration Heat"
               value={productData.watts.toString()}
               onChangeText={(value) => handleValueChange('watts', value)}
-              keyboardType="numeric"
+              keyboardType="decimal-pad"
               placeholder="0"
               unit="W/tonne"
               editable={productData.overridePreset || productData.productName === 'Custom'}

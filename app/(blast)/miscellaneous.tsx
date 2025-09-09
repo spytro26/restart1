@@ -43,7 +43,7 @@ export default function BlastMiscellaneousTab() {
                             label="Capacity Required"
                             value={miscData.capacityRequired.toString()}
                             onChangeText={(value) => handleValueChange('capacityRequired', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="2000"
                             unit="kgs"
                         />
@@ -52,7 +52,7 @@ export default function BlastMiscellaneousTab() {
                             label="Batch Hours"
                             value={miscData.batchHours.toString()}
                             onChangeText={(value) => handleValueChange('batchHours', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="8"
                             unit="Hrs"
                         />
@@ -61,12 +61,13 @@ export default function BlastMiscellaneousTab() {
                             label="Internal Volume"
                             value={miscData.internalVolume.toString()}
                             onChangeText={(value) => handleValueChange('internalVolume', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="3.5"
                             unit="M3"
                         />
 
                         <InputField
+            keyboardType="decimal-pad"
                             label="Insulation Type"
                             value={miscData.insulationType}
                             onChangeText={(value) => handleStringChange('insulationType', value)}
@@ -77,7 +78,7 @@ export default function BlastMiscellaneousTab() {
                             label="Insulation Thickness"
                             value={miscData.insulationThickness.toString()}
                             onChangeText={(value) => handleValueChange('insulationThickness', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="150"
                             unit="mm"
                         />
@@ -90,7 +91,7 @@ export default function BlastMiscellaneousTab() {
                             label="Air Change Rate"
                             value={miscData.airChangeRate.toString()}
                             onChangeText={(value) => handleValueChange('airChangeRate', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="4.2"
                             unit="L/S"
                         />
@@ -99,7 +100,7 @@ export default function BlastMiscellaneousTab() {
                             label="Enthalpy Difference"
                             value={miscData.enthalpyDiff.toString()}
                             onChangeText={(value) => handleValueChange('enthalpyDiff', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="0.14"
                             unit="kJ/L"
                         />
@@ -108,7 +109,7 @@ export default function BlastMiscellaneousTab() {
                             label="Hours of Load"
                             value={miscData.hoursOfLoad.toString()}
                             onChangeText={(value) => handleValueChange('hoursOfLoad', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="2"
                             unit="hrs"
                         />
@@ -121,7 +122,7 @@ export default function BlastMiscellaneousTab() {
                             label="Fan Motor Rating"
                             value={miscData.fanMotorRating.toString()}
                             onChangeText={(value) => handleValueChange('fanMotorRating', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="0.37"
                             unit="kW"
                         />
@@ -130,7 +131,7 @@ export default function BlastMiscellaneousTab() {
                             label="Equipment Quantity"
                             value={miscData.equipmentQuantity.toString()}
                             onChangeText={(value) => handleValueChange('equipmentQuantity', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="3"
                         />
 
@@ -138,7 +139,7 @@ export default function BlastMiscellaneousTab() {
                             label="Equipment Hours"
                             value={miscData.equipmentHours.toString()}
                             onChangeText={(value) => handleValueChange('equipmentHours', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="8"
                             unit="hrs"
                         />
@@ -151,7 +152,7 @@ export default function BlastMiscellaneousTab() {
                             label="Occupancy Count"
                             value={miscData.occupancyCount.toString()}
                             onChangeText={(value) => handleValueChange('occupancyCount', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="4.6"
                             unit="people"
                         />
@@ -160,7 +161,7 @@ export default function BlastMiscellaneousTab() {
                             label="Occupancy Heat Load"
                             value={miscData.occupancyHeatLoad.toString()}
                             onChangeText={(value) => handleValueChange('occupancyHeatLoad', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="0.5"
                             unit="W/person"
                         />
@@ -169,7 +170,7 @@ export default function BlastMiscellaneousTab() {
                             label="Occupancy Hours"
                             value={miscData.occupancyHours.toString()}
                             onChangeText={(value) => handleValueChange('occupancyHours', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="1"
                             unit="hrs"
                         />
@@ -182,7 +183,7 @@ export default function BlastMiscellaneousTab() {
                             label="Light Load"
                             value={miscData.lightLoad.toString()}
                             onChangeText={(value) => handleValueChange('lightLoad', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="0.1"
                             unit="kW"
                         />
@@ -191,7 +192,7 @@ export default function BlastMiscellaneousTab() {
                             label="Light Hours"
                             value={miscData.lightHours.toString()}
                             onChangeText={(value) => handleValueChange('lightHours', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="1.2"
                             unit="hrs"
                         />
@@ -205,7 +206,7 @@ export default function BlastMiscellaneousTab() {
                             label="Heater Capacity"
                             value={miscData.peripheralHeaterCapacity.toString()}
                             onChangeText={(value) => handleValueChange('peripheralHeaterCapacity', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="1.6"
                             unit="kW"
                         />
@@ -214,7 +215,7 @@ export default function BlastMiscellaneousTab() {
                             label="Number of Heaters"
                             value={miscData.peripheralHeaterCount.toString()}
                             onChangeText={(value) => handleValueChange('peripheralHeaterCount', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="3"
                         />
 
@@ -222,7 +223,7 @@ export default function BlastMiscellaneousTab() {
                             label="Hours"
                             value={miscData.peripheralHeaterHours.toString()}
                             onChangeText={(value) => handleValueChange('peripheralHeaterHours', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="8"
                             unit="hrs"
                         />
@@ -232,7 +233,7 @@ export default function BlastMiscellaneousTab() {
                             label="Heater Capacity"
                             value={miscData.doorHeaterCapacity.toString()}
                             onChangeText={(value) => handleValueChange('doorHeaterCapacity', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="0.27"
                             unit="kW"
                         />
@@ -241,7 +242,7 @@ export default function BlastMiscellaneousTab() {
                             label="Number of Doors"
                             value={miscData.doorHeaterCount.toString()}
                             onChangeText={(value) => handleValueChange('doorHeaterCount', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="1"
                         />
 
@@ -249,7 +250,7 @@ export default function BlastMiscellaneousTab() {
                             label="Hours"
                             value={miscData.doorHeaterHours.toString()}
                             onChangeText={(value) => handleValueChange('doorHeaterHours', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="8"
                             unit="hrs"
                         />
@@ -259,7 +260,7 @@ export default function BlastMiscellaneousTab() {
                             label="Heater Capacity"
                             value={miscData.trayHeaterCapacity.toString()}
                             onChangeText={(value) => handleValueChange('trayHeaterCapacity', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="2.2"
                             unit="kW"
                         />
@@ -268,7 +269,7 @@ export default function BlastMiscellaneousTab() {
                             label="Number of Heaters"
                             value={miscData.trayHeaterCount.toString()}
                             onChangeText={(value) => handleValueChange('trayHeaterCount', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="1"
                         />
 
@@ -276,7 +277,7 @@ export default function BlastMiscellaneousTab() {
                             label="Hours"
                             value={miscData.trayHeaterHours.toString()}
                             onChangeText={(value) => handleValueChange('trayHeaterHours', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="0.4"
                             unit="hrs"
                         />
@@ -286,7 +287,7 @@ export default function BlastMiscellaneousTab() {
                             label="Heater Capacity"
                             value={miscData.drainHeaterCapacity.toString()}
                             onChangeText={(value) => handleValueChange('drainHeaterCapacity', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="0.04"
                             unit="kW"
                         />
@@ -295,7 +296,7 @@ export default function BlastMiscellaneousTab() {
                             label="Number of Heaters"
                             value={miscData.drainHeaterCount.toString()}
                             onChangeText={(value) => handleValueChange('drainHeaterCount', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="1"
                         />
 
@@ -303,7 +304,7 @@ export default function BlastMiscellaneousTab() {
                             label="Hours"
                             value={miscData.drainHeaterHours.toString()}
                             onChangeText={(value) => handleValueChange('drainHeaterHours', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="8"
                             unit="hrs"
                         />
@@ -316,7 +317,7 @@ export default function BlastMiscellaneousTab() {
                             label="Ambient Temperature"
                             value={miscData.ambientTemp.toString()}
                             onChangeText={(value) => handleValueChange('ambientTemp', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="43"
                             unit="°C"
                         />
@@ -325,7 +326,7 @@ export default function BlastMiscellaneousTab() {
                             label="Room Temperature"
                             value={miscData.roomTemp.toString()}
                             onChangeText={(value) => handleValueChange('roomTemp', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="-35"
                             unit="°C"
                         />
@@ -334,7 +335,7 @@ export default function BlastMiscellaneousTab() {
                             label="Product Incoming"
                             value={miscData.productIncoming.toString()}
                             onChangeText={(value) => handleValueChange('productIncoming', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="-5"
                             unit="°C"
                         />
@@ -343,7 +344,7 @@ export default function BlastMiscellaneousTab() {
                             label="Product Outgoing"
                             value={miscData.productOutgoing.toString()}
                             onChangeText={(value) => handleValueChange('productOutgoing', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="-30"
                             unit="°C"
                         />

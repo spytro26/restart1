@@ -7,23 +7,31 @@ import {
     SafeAreaView,
 } from 'react-native';
 import { InputField } from '@/components/InputField';
+import { BlastProductPicker } from '@/components/BlastProductPicker';
 import { useBlastStorageContext } from '@/hooks/BlastStorageProvider';
+import { freezerProducts } from '@/data/freezerProducts';
 
 export default function BlastProductTab() {
     const { productData, saveProductData } = useBlastStorageContext();
+
+    const handleProductSelect = (productName: string) => {
+        const selectedProduct = freezerProducts.find(p => p.name === productName);
+        if (selectedProduct) {
+            saveProductData({
+                ...productData,
+                productName,
+                cpAboveFreezing: selectedProduct.cpAboveFreezing,
+                cpBelowFreezing: selectedProduct.cpBelowFreezing,
+                latentHeat: selectedProduct.latentHeatOfFusion,
+            });
+        }
+    };
 
     const handleValueChange = (field: string, value: string) => {
         const numericValue = parseFloat(value) || 0;
         saveProductData({
             ...productData,
             [field]: numericValue,
-        });
-    };
-
-    const handleStringChange = (field: string, value: string) => {
-        saveProductData({
-            ...productData,
-            [field]: value,
         });
     };
 
@@ -39,18 +47,16 @@ export default function BlastProductTab() {
                     <View style={styles.section}>
                         <Text style={styles.sectionTitle}>Product Information</Text>
 
-                        <InputField
-                            label="Product Name"
-                            value={productData.productName}
-                            onChangeText={(value) => handleStringChange('productName', value)}
-                            placeholder="Chicken"
+                        <BlastProductPicker
+                            selected={productData.productName || 'Custom'}
+                            onSelect={handleProductSelect}
                         />
 
                         <InputField
                             label="Pull Down Hours"
                             value={productData.pullDownHours.toString()}
                             onChangeText={(value) => handleValueChange('pullDownHours', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="8"
                             unit="hrs"
                         />
@@ -64,7 +70,7 @@ export default function BlastProductTab() {
                             label="Mass Before Freezing"
                             value={productData.massBeforeFreezing.toString()}
                             onChangeText={(value) => handleValueChange('massBeforeFreezing', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="2000"
                             unit="kg"
                         />
@@ -73,7 +79,7 @@ export default function BlastProductTab() {
                             label="Cp Above Freezing"
                             value={productData.cpAboveFreezing.toString()}
                             onChangeText={(value) => handleValueChange('cpAboveFreezing', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="3.49"
                             unit="kJ/kg·K"
                         />
@@ -82,7 +88,7 @@ export default function BlastProductTab() {
                             label="Temperature Difference"
                             value={productData.tempDiffAbove.toString()}
                             onChangeText={(value) => handleValueChange('tempDiffAbove', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="-3.3"
                             unit="K"
                         />
@@ -96,7 +102,7 @@ export default function BlastProductTab() {
                             label="Mass for Latent Heat"
                             value={productData.massLatentHeat.toString()}
                             onChangeText={(value) => handleValueChange('massLatentHeat', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="2000"
                             unit="kg"
                         />
@@ -105,7 +111,7 @@ export default function BlastProductTab() {
                             label="Latent Heat"
                             value={productData.latentHeat.toString()}
                             onChangeText={(value) => handleValueChange('latentHeat', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="233"
                             unit="kJ/kg"
                         />
@@ -119,7 +125,7 @@ export default function BlastProductTab() {
                             label="Mass After Freezing"
                             value={productData.massAfterFreezing.toString()}
                             onChangeText={(value) => handleValueChange('massAfterFreezing', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="2000"
                             unit="kg"
                         />
@@ -128,7 +134,7 @@ export default function BlastProductTab() {
                             label="Cp Below Freezing"
                             value={productData.cpBelowFreezing.toString()}
                             onChangeText={(value) => handleValueChange('cpBelowFreezing', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="2.14"
                             unit="kJ/kg·K"
                         />
@@ -137,7 +143,7 @@ export default function BlastProductTab() {
                             label="Temperature Difference"
                             value={productData.tempDiffBelow.toString()}
                             onChangeText={(value) => handleValueChange('tempDiffBelow', value)}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             placeholder="-28.3"
                             unit="K"
                         />
