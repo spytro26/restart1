@@ -27,41 +27,41 @@ export default function FreezerResultsTab() {
       subtitle: 'Key calculation results for freezer room refrigeration system',
       sections: [
         {
-          title: 'Final Results',
+          title: 'Main Results',
           items: [
-            { label: 'Refrigeration Capacity', value: results.totalLoadTR.toFixed(2), unit: 'TR', isHighlighted: true },
-            { label: 'Refrigeration Capacity', value: results.refrigerationCapacity.toFixed(0), unit: 'BTU/hr' },
-            { label: 'Total Load', value: results.loadInKw.toFixed(1), unit: 'kW', isHighlighted: true },
-            { label: 'Capacity with 20% Safety Factor', value: results.capacityTR.toFixed(2), unit: 'TR' },
+            { label: 'Total Load (without safety factor)', value: results.loadInKw.toFixed(1), unit: 'kW', isHighlighted: true },
+            { label: 'Total Load (with 5% safety factor)', value: (results.loadInKw * 1.05).toFixed(1), unit: 'kW', isHighlighted: true },
+            { label: 'Refrigeration Capacity (TR)', value: results.totalLoadTR.toFixed(2), unit: 'TR' },
+            { label: 'Refrigeration Capacity (with 5% safety factor)', value: results.capacityTR.toFixed(2), unit: 'TR' },
           ]
         },
         {
           title: 'Transmission Loads',
           items: [
-            { label: 'Total Transmission', value: results.totalTransmissionLoad.toFixed(3), unit: 'kW' },
-            { label: 'Wall Load', value: results.wallLoad.toFixed(3), unit: 'kW' },
-            { label: 'Ceiling Load', value: results.ceilingLoad.toFixed(3), unit: 'kW' },
-            { label: 'Floor Load', value: results.floorLoad.toFixed(3), unit: 'kW' },
+            { label: 'Total Transmission', value: results.totalTransmissionLoad.toFixed(1), unit: 'kW' },
+            { label: 'Wall Load', value: results.wallLoad.toFixed(1), unit: 'kW' },
+            { label: 'Ceiling Load', value: results.ceilingLoad.toFixed(1), unit: 'kW' },
+            { label: 'Floor Load', value: results.floorLoad.toFixed(1), unit: 'kW' },
           ]
         },
         {
           title: 'Product Loads (Freezing Process)',
           items: [
-            { label: 'Before Freezing Load', value: results.beforeFreezingLoad.toFixed(3), unit: 'kW' },
-            { label: 'Latent Heat Load', value: results.latentHeatLoad.toFixed(3), unit: 'kW' },
-            { label: 'After Freezing Load', value: results.afterFreezingLoad.toFixed(3), unit: 'kW' },
-            { label: 'Total Product Load', value: results.totalProductLoad.toFixed(3), unit: 'kW' },
+            { label: 'Before Freezing Load', value: results.beforeFreezingLoad.toFixed(1), unit: 'kW' },
+            { label: 'Latent Heat Load', value: results.latentHeatLoad.toFixed(1), unit: 'kW' },
+            { label: 'After Freezing Load', value: results.afterFreezingLoad.toFixed(1), unit: 'kW' },
+            { label: 'Total Product Load', value: results.totalProductLoad.toFixed(1), unit: 'kW' },
           ]
         },
         {
           title: 'Other Loads',
           items: [
-            { label: 'Respiration Load', value: results.respirationLoad.toFixed(3), unit: 'kW' },
-            { label: 'Air Change Load', value: results.airChangeLoad.toFixed(3), unit: 'kW' },
-            { label: 'Equipment Load', value: results.equipmentLoad.toFixed(3), unit: 'kW' },
-            { label: 'Lighting Load', value: results.lightLoad.toFixed(3), unit: 'kW' },
-            { label: 'Heater Load', value: results.heaterLoad.toFixed(3), unit: 'kW' },
-            { label: 'Total Misc Load', value: results.totalMiscLoad.toFixed(3), unit: 'kW' },
+            { label: 'Respiration Load', value: results.respirationLoad.toFixed(1), unit: 'kW' },
+            { label: 'Air Change Load', value: results.airChangeLoad.toFixed(1), unit: 'kW' },
+            { label: 'Equipment Load', value: results.equipmentLoad.toFixed(1), unit: 'kW' },
+            { label: 'Lighting Load', value: results.lightLoad.toFixed(1), unit: 'kW' },
+            { label: 'Heater Load', value: results.heaterLoad.toFixed(1), unit: 'kW' },
+            { label: 'Total Misc Load', value: results.totalMiscLoad.toFixed(1), unit: 'kW' },
           ]
         }
       ]
@@ -79,7 +79,7 @@ export default function FreezerResultsTab() {
     <View style={[styles.resultCard, isHighlighted && styles.highlightedCard]}>
       <Text style={[styles.resultLabel, isHighlighted && styles.highlightedLabel]}>{title}</Text>
       <Text style={[styles.resultValue, isHighlighted && styles.highlightedValue]}>
-        {value.toFixed(3)} <Text style={styles.resultUnit}>{unit}</Text>
+        {value.toFixed(1)} <Text style={styles.resultUnit}>{unit}</Text>
       </Text>
     </View>
   );
@@ -96,8 +96,8 @@ export default function FreezerResultsTab() {
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
         <View style={styles.content}>
           <View style={styles.header}>
-            <Text style={styles.title}>Final Results</Text>
-            <Text style={styles.subtitle}>Freezer heat load calculation results</Text>
+            <Text style={styles.title}>Freezer Results</Text>
+            <Text style={styles.subtitle}>Heat load calculations with main results in kW</Text>
 
             {/* PDF Export Button */}
             <TouchableOpacity style={styles.pdfButton} onPress={handleSharePDF}>
@@ -106,34 +106,29 @@ export default function FreezerResultsTab() {
             </TouchableOpacity>
           </View>
 
-          {/* Final Results - Highlighted */}
-          <SectionCard title="Final Results">
+          {/* Final Results - Highlighted in kW */}
+          <SectionCard title="Main Results">
             <ResultCard
-              title="Total Load"
-              value={results.totalLoadTR}
-              unit="TR"
-              isHighlighted={true}
-            />
-            <ResultCard
-              title="Capacity with 20% Safety Factor"
-              value={results.capacityTR}
-              unit="TR"
-              isHighlighted={true}
-            />
-            <ResultCard
-              title="Total Load"
+              title="Total Load (without safety factor)"
               value={results.loadInKw}
               unit="kW"
+              isHighlighted={true}
             />
             <ResultCard
-              title="Refrigeration Capacity"
+              title="Total Load (with 5% safety factor)"
+              value={results.loadInKw * 1.05}
+              unit="kW"
+              isHighlighted={true}
+            />
+            <ResultCard
+              title="Refrigeration Capacity (TR)"
               value={results.totalLoadTR}
               unit="TR"
             />
             <ResultCard
-              title="Refrigeration Capacity"
-              value={results.refrigerationCapacity}
-              unit="BTU/hr"
+              title="Refrigeration Capacity (with 5% safety factor)"
+              value={results.capacityTR}
+              unit="TR"
             />
           </SectionCard>
 
@@ -206,11 +201,11 @@ export default function FreezerResultsTab() {
             <ResultCard title="Daily Loading" value={results.dailyLoading || 0} unit="kg/day" />
             <View style={styles.resultCard}>
               <Text style={styles.resultLabel}>Insulation Type</Text>
-              <Text style={styles.resultValue}>{results.insulationType || 'PUF'}</Text>
+              <Text style={styles.resultValue}>{roomData.insulationType || 'PUF'}</Text>
             </View>
             <ResultCard
-              title="Insulation Thickness"
-              value={results.insulationThickness || 0}
+              title="Wall Insulation Thickness"
+              value={roomData.wallInsulationThickness || 0}
               unit="mm"
             />
           </SectionCard>

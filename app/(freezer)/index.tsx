@@ -8,24 +8,39 @@ import {
 } from 'react-native';
 import { InputField } from '@/components/InputField';
 import { UnitPicker } from '@/components/UnitPicker';
+import { InsulationTypePicker } from '@/components/InsulationTypePicker';
 import { useFreezerStorageContext } from '@/hooks/FreezerStorageProvider';
 
 export default function FreezerRoomDetailsTab() {
-  const { roomData, saveRoomData } = useFreezerStorageContext();
+  const { roomData, saveRoomData, miscData, saveMiscData } = useFreezerStorageContext();
 
   const handleValueChange = (field: string, value: string) => {
     const numericValue = parseFloat(value) || 0;
-    saveRoomData({
-      ...roomData,
-      [field]: numericValue,
-    });
+    if (field === 'ambientTemp' || field === 'roomTemp') {
+      saveMiscData({
+        ...miscData,
+        [field]: numericValue,
+      });
+    } else {
+      saveRoomData({
+        ...roomData,
+        [field]: numericValue,
+      });
+    }
   };
 
   const handleUnitChange = (field: string, unit: string) => {
-    saveRoomData({
-      ...roomData,
-      [field]: unit,
-    });
+    if (field === 'tempUnit') {
+      saveMiscData({
+        ...miscData,
+        [field]: unit as 'C' | 'F',
+      });
+    } else {
+      saveRoomData({
+        ...roomData,
+        [field]: unit,
+      });
+    }
   };
 
   return (
@@ -88,6 +103,83 @@ export default function FreezerRoomDetailsTab() {
                 <Text style={styles.unitText}>{roomData.lengthUnit}</Text>
               </View>
             </View>
+          </View>
+
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Temperature Settings</Text>
+            <Text style={styles.sectionSubtitle}>Operating temperature conditions</Text>
+
+            <View style={styles.inputRow}>
+              <View style={styles.inputContainer}>
+                <InputField
+                  label="Ambient Temperature"
+                  value={miscData.ambientTemp.toString()}
+                  onChangeText={(value) => handleValueChange('ambientTemp', value)}
+                  keyboardType="decimal-pad"
+                  placeholder="45"
+                />
+              </View>
+              <View style={styles.unitContainer}>
+                <UnitPicker
+                  selectedUnit={miscData.tempUnit}
+                  onUnitChange={(unit) => handleUnitChange('tempUnit', unit)}
+                  units={['C', 'F']}
+                />
+              </View>
+            </View>
+
+            <View style={styles.inputRow}>
+              <View style={styles.inputContainer}>
+                <InputField
+                  label="Freezer Room Temperature"
+                  value={miscData.roomTemp.toString()}
+                  onChangeText={(value) => handleValueChange('roomTemp', value)}
+                  keyboardType="decimal-pad"
+                  placeholder="-25"
+                />
+              </View>
+              <View style={styles.unitContainer}>
+                <Text style={styles.unitText}>°{miscData.tempUnit}</Text>
+              </View>
+            </View>
+          </View>
+
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Insulation Parameters</Text>
+            <Text style={styles.sectionSubtitle}>Thermal insulation specifications</Text>
+
+            <Text style={styles.fieldLabel}>Insulation Type</Text>
+            <InsulationTypePicker
+              selected={roomData.insulationType}
+              onSelect={(type) => handleValueChange('insulationType', type)}
+            />
+
+            <InputField
+              label="Wall Insulation Thickness"
+              value={roomData.wallInsulationThickness.toString()}
+              onChangeText={(value) => handleValueChange('wallInsulationThickness', value)}
+              keyboardType="decimal-pad"
+              placeholder="150"
+              unit="mm"
+            />
+
+            <InputField
+              label="Ceiling Insulation Thickness"
+              value={roomData.ceilingInsulationThickness.toString()}
+              onChangeText={(value) => handleValueChange('ceilingInsulationThickness', value)}
+              keyboardType="decimal-pad"
+              placeholder="150"
+              unit="mm"
+            />
+
+            <InputField
+              label="Floor Insulation Thickness"
+              value={roomData.floorInsulationThickness.toString()}
+              onChangeText={(value) => handleValueChange('floorInsulationThickness', value)}
+              keyboardType="decimal-pad"
+              placeholder="150"
+              unit="mm"
+            />
           </View>
 
           <View style={styles.section}>
@@ -200,6 +292,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#6b7280',
     marginBottom: 16,
+  },
+  fieldLabel: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#374151',
+    marginBottom: 8,
   },
   inputRow: {
     flexDirection: 'row',

@@ -14,6 +14,13 @@ const defaultRoomData: RoomData = {
     width: 4.5,    // Excel shows 4.5m
     height: 3.0,   // Excel shows 3.0m
     lengthUnit: 'm',
+
+    // Insulation parameters (from Excel)
+    insulationType: 'PUF',              // Excel shows PUF
+    wallInsulationThickness: 100,       // Excel shows 100mm
+    ceilingInsulationThickness: 100,    // Excel shows 100mm
+    floorInsulationThickness: 100,      // Excel shows 100mm
+
     wallUFactor: 0.295,    // Excel value
     ceilingUFactor: 0.295, // Excel value
     floorUFactor: 0.295,   // Excel value
@@ -25,6 +32,12 @@ const defaultRoomData: RoomData = {
 const defaultProductData: ProductData = {
     massBeforeFreezing: 4000, // Excel shows 4000 kg
     massUnit: 'kg',
+
+    // Product temperatures - NEW DEFAULT VALUES
+    enteringTemp: 30,         // Default entering temperature
+    finalTemp: 4,             // Default final temperature  
+    tempUnit: 'C',            // Default temperature unit
+
     cpAboveFreezing: 4.1,     // Excel shows 4.1 kJ/kg·K
     pullDownHours: 24,        // Excel shows 24 hrs
     respirationMass: 4000,    // Excel shows 4000 kg (same as mass)
@@ -60,14 +73,10 @@ const defaultMiscData: MiscellaneousData = {
     // Temperature parameters (Excel values)
     ambientTemp: 45,         // Excel shows 45°C
     roomTemp: 2,             // Excel shows 2°C
-    productIncoming: 30,     // Excel shows 30°C
-    productOutgoing: 4,      // Excel shows 4°C
     tempUnit: 'C',
 
     // Additional Excel parameters
     dailyLoading: 4000,      // Excel shows 4000 kg/Day
-    insulationType: 'PUF',   // Excel shows PUF
-    insulationThickness: 100, // Excel shows 100mm
     cpAboveFreezingMisc: 4.1,
     pullDownTime: 24,
     airFlowPerFan: 4163,     // Excel shows 4163 CFM

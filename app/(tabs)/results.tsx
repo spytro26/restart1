@@ -29,33 +29,33 @@ export default function ColdRoomResultsTab() {
         {
           title: 'Final Results',
           items: [
-            { label: 'Total Load', value: results.totalLoadTR.toFixed(2), unit: 'TR', isHighlighted: true },
-            { label: 'Capacity with Safety', value: results.capacityTR.toFixed(2), unit: 'TR', isHighlighted: true },
-            { label: 'Total Load', value: results.loadInKw.toFixed(2), unit: 'kW', isHighlighted: true },
+            { label: 'Total Load', value: results.totalLoadTR.toFixed(1), unit: 'TR', isHighlighted: true },
+            { label: 'Capacity with Safety', value: results.capacityTR.toFixed(1), unit: 'TR', isHighlighted: true },
+            { label: 'Total Load', value: results.loadInKw.toFixed(1), unit: 'kW', isHighlighted: true },
             { label: 'Refrigeration Capacity', value: results.refrigerationCapacity.toFixed(0), unit: 'BTU/hr' },
           ]
         },
         {
           title: 'Transmission Loads',
           items: [
-            { label: 'Total Transmission', value: results.totalTransmissionLoad.toFixed(2), unit: 'kW' },
-            { label: 'Wall Load', value: results.wallLoad.toFixed(2), unit: 'kW' },
-            { label: 'Ceiling Load', value: results.ceilingLoad.toFixed(2), unit: 'kW' },
+            { label: 'Total Transmission', value: results.totalTransmissionLoad.toFixed(1), unit: 'kW' },
+            { label: 'Wall Load', value: results.wallLoad.toFixed(1), unit: 'kW' },
+            { label: 'Ceiling Load', value: results.ceilingLoad.toFixed(1), unit: 'kW' },
           ]
         },
         {
           title: 'Product & Other Loads',
           items: [
-            { label: 'Product Load', value: results.productLoad.toFixed(2), unit: 'kW' },
-            { label: 'Total Miscellaneous', value: results.totalMiscLoad.toFixed(2), unit: 'kW' },
-            { label: 'Air Change Load', value: results.airChangeLoad.toFixed(2), unit: 'kW' },
+            { label: 'Product Load', value: results.productLoad.toFixed(1), unit: 'kW' },
+            { label: 'Total Miscellaneous', value: results.totalMiscLoad.toFixed(1), unit: 'kW' },
+            { label: 'Air Change Load', value: results.airChangeLoad.toFixed(1), unit: 'kW' },
           ]
         },
         {
           title: 'Heat Distribution',
           items: [
-            { label: 'Sensible Heat', value: (results.sensibleHeat / 1000).toFixed(2), unit: 'kW' },
-            { label: 'Latent Heat', value: (results.latentHeat / 1000).toFixed(2), unit: 'kW' },
+            { label: 'Sensible Heat', value: (results.sensibleHeat / 1000).toFixed(1), unit: 'kW' },
+            { label: 'Latent Heat', value: (results.latentHeat / 1000).toFixed(1), unit: 'kW' },
             { label: 'Air Quantity Required', value: results.airQtyRequired.toFixed(0), unit: 'CFM' },
           ]
         }
@@ -74,7 +74,7 @@ export default function ColdRoomResultsTab() {
     <View style={[styles.resultCard, isHighlighted && styles.highlightedCard]}>
       <Text style={[styles.resultLabel, isHighlighted && styles.highlightedLabel]}>{title}</Text>
       <Text style={[styles.resultValue, isHighlighted && styles.highlightedValue]}>
-        {value.toFixed(3)} <Text style={styles.resultUnit}>{unit}</Text>
+        {value.toFixed(1)} <Text style={styles.resultUnit}>{unit}</Text>
       </Text>
     </View>
   );
@@ -104,9 +104,20 @@ export default function ColdRoomResultsTab() {
           {/* Final Results - Highlighted */}
           <SectionCard title="Final Results">
             <ResultCard
-              title="Total Load"
+              title="Total Load (Base)"
+              value={results.loadInKw}
+              unit="kW"
+              isHighlighted={true}
+            />
+            <ResultCard
+              title="Total Load (Base)"
               value={results.totalLoadTR}
               unit="TR"
+            />
+            <ResultCard
+              title="Capacity with 20% Safety Factor"
+              value={results.loadInKw * 1.20}
+              unit="kW"
               isHighlighted={true}
             />
             <ResultCard
@@ -114,11 +125,6 @@ export default function ColdRoomResultsTab() {
               value={results.capacityTR}
               unit="TR"
               isHighlighted={true}
-            />
-            <ResultCard
-              title="Total Load"
-              value={results.loadInKw}
-              unit="kW"
             />
             <ResultCard
               title="Refrigeration Capacity"

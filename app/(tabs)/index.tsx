@@ -7,10 +7,11 @@ import {
   SafeAreaView,
 } from 'react-native';
 import { InputField } from '@/components/InputField';
+import { InsulationTypePicker } from '@/components/InsulationTypePicker';
 import { useStorageContext } from '@/hooks/StorageProvider';
 
 export default function RoomDetailsTab() {
-  const { roomData, saveRoomData } = useStorageContext();
+  const { roomData, saveRoomData, miscData, saveMiscData } = useStorageContext();
 
   const updateRoomData = (field: string, value: string | number) => {
     const newData = { ...roomData, [field]: value };
@@ -35,6 +36,21 @@ export default function RoomDetailsTab() {
   const handleHoursChange = (field: 'wallHours' | 'ceilingHours' | 'floorHours', value: string) => {
     const numValue = parseFloat(value) || 0;
     updateRoomData(field, numValue);
+  };
+
+  const handleInsulationChange = (field: 'wallInsulationThickness' | 'ceilingInsulationThickness' | 'floorInsulationThickness', value: string) => {
+    const numValue = parseFloat(value) || 0;
+    updateRoomData(field, numValue);
+  };
+
+  const updateMiscData = (field: string, value: string | number) => {
+    const newData = { ...miscData, [field]: value };
+    saveMiscData(newData);
+  };
+
+  const handleTemperatureChange = (field: 'ambientTemp' | 'roomTemp', value: string) => {
+    const numValue = parseFloat(value) || 0;
+    updateMiscData(field, numValue);
   };
 
   // Calculate internal volume
@@ -84,6 +100,60 @@ export default function RoomDetailsTab() {
               {internalVolume.toFixed(2)} {roomData.lengthUnit}³
             </Text>
           </View>
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Temperature Settings</Text>
+
+          <InputField
+            label="Ambient Temperature"
+            value={miscData.ambientTemp.toString()}
+            onChangeText={(value) => handleTemperatureChange('ambientTemp', value)}
+            unitOptions={['C', 'F']}
+            selectedUnit={miscData.tempUnit}
+            onUnitChange={(unit) => updateMiscData('tempUnit', unit as 'C' | 'F')}
+          />
+
+          <InputField
+            label="Room Temperature"
+            value={miscData.roomTemp.toString()}
+            onChangeText={(value) => handleTemperatureChange('roomTemp', value)}
+            unitOptions={['C', 'F']}
+            selectedUnit={miscData.tempUnit}
+            onUnitChange={(unit) => updateMiscData('tempUnit', unit as 'C' | 'F')}
+          />
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Insulation Parameters</Text>
+
+          <Text style={styles.subsectionTitle}>Insulation Type</Text>
+          <InsulationTypePicker
+            selected={roomData.insulationType}
+            onSelect={(type) => updateRoomData('insulationType', type)}
+          />
+
+          <Text style={styles.subsectionTitle}>Insulation Thickness (mm)</Text>
+          <InputField
+            label="Wall Insulation Thickness"
+            value={roomData.wallInsulationThickness.toString()}
+            onChangeText={(value) => handleInsulationChange('wallInsulationThickness', value)}
+            unit="mm"
+          />
+
+          <InputField
+            label="Ceiling Insulation Thickness"
+            value={roomData.ceilingInsulationThickness.toString()}
+            onChangeText={(value) => handleInsulationChange('ceilingInsulationThickness', value)}
+            unit="mm"
+          />
+
+          <InputField
+            label="Floor Insulation Thickness"
+            value={roomData.floorInsulationThickness.toString()}
+            onChangeText={(value) => handleInsulationChange('floorInsulationThickness', value)}
+            unit="mm"
+          />
         </View>
 
         <View style={styles.section}>

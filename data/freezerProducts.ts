@@ -1,6 +1,7 @@
 // Freezer product presets based on Excel data and refrigeration engineering
 export interface FreezerProductPreset {
   name: string;
+  category: string;         // Product category
   cpAboveFreezing: number;  // kJ/kg·K
   cpBelowFreezing: number;  // kJ/kg·K
   latentHeatOfFusion: number; // kJ/kg
@@ -11,6 +12,7 @@ export interface FreezerProductPreset {
 export const freezerProducts: FreezerProductPreset[] = [
   {
     name: 'Custom',
+    category: 'Custom',
     cpAboveFreezing: 3.74,
     cpBelowFreezing: 1.96,
     latentHeatOfFusion: 233,
@@ -18,9 +20,21 @@ export const freezerProducts: FreezerProductPreset[] = [
     respirationWatts: 0,
   },
   
+  // Chicken - Excel exact values
+  {
+    name: 'Chicken',
+    category: 'Meat & Poultry',
+    cpAboveFreezing: 3.74,     // Excel shows 3.74 kJ/kg·K
+    cpBelowFreezing: 1.96,     // Excel shows 1.96 kJ/kg·K  
+    latentHeatOfFusion: 233,   // Excel shows 233 kJ/kg
+    freezingPoint: -0.8,       // Excel shows -0.8°C
+    respirationWatts: 0,       // Frozen product - no respiration
+  },
+  
   // Dairy Products
   {
     name: 'Butter',
+    category: 'Dairy Products',
     cpAboveFreezing: 2.4,
     cpBelowFreezing: 1.3,
     latentHeatOfFusion: 120,
@@ -29,6 +43,7 @@ export const freezerProducts: FreezerProductPreset[] = [
   },
   {
     name: 'Cheese Fat',
+    category: 'Dairy Products',
     cpAboveFreezing: 2.8,
     cpBelowFreezing: 1.5,
     latentHeatOfFusion: 160,
@@ -37,6 +52,7 @@ export const freezerProducts: FreezerProductPreset[] = [
   },
   {
     name: 'Cheese Lean',
+    category: 'Dairy Products',
     cpAboveFreezing: 3.2,
     cpBelowFreezing: 1.7,
     latentHeatOfFusion: 200,
@@ -45,6 +61,7 @@ export const freezerProducts: FreezerProductPreset[] = [
   },
   {
     name: 'Curd',
+    category: 'Dairy Products',
     cpAboveFreezing: 3.6,
     cpBelowFreezing: 1.9,
     latentHeatOfFusion: 220,
@@ -53,6 +70,7 @@ export const freezerProducts: FreezerProductPreset[] = [
   },
   {
     name: 'Margarine',
+    category: 'Dairy Products',
     cpAboveFreezing: 2.5,
     cpBelowFreezing: 1.4,
     latentHeatOfFusion: 130,
@@ -61,6 +79,7 @@ export const freezerProducts: FreezerProductPreset[] = [
   },
   {
     name: 'Milk',
+    category: 'Dairy Products',
     cpAboveFreezing: 3.9,
     cpBelowFreezing: 2.0,
     latentHeatOfFusion: 270,
@@ -69,6 +88,7 @@ export const freezerProducts: FreezerProductPreset[] = [
   },
   {
     name: 'Ice Cream',
+    category: 'Dairy Products',
     cpAboveFreezing: 3.14,
     cpBelowFreezing: 1.72,
     latentHeatOfFusion: 196,
@@ -79,6 +99,7 @@ export const freezerProducts: FreezerProductPreset[] = [
   // Meat & Poultry
   {
     name: 'Meat',
+    category: 'Meat & Poultry',
     cpAboveFreezing: 3.74,
     cpBelowFreezing: 1.96,
     latentHeatOfFusion: 233,
@@ -87,6 +108,7 @@ export const freezerProducts: FreezerProductPreset[] = [
   },
   {
     name: 'Chicken',
+    category: 'Meat & Poultry',
     cpAboveFreezing: 3.4,
     cpBelowFreezing: 1.8,
     latentHeatOfFusion: 215,
@@ -95,6 +117,7 @@ export const freezerProducts: FreezerProductPreset[] = [
   },
   {
     name: 'Pig Fat',
+    category: 'Meat & Poultry',
     cpAboveFreezing: 2.8,
     cpBelowFreezing: 1.5,
     latentHeatOfFusion: 180,
@@ -103,6 +126,7 @@ export const freezerProducts: FreezerProductPreset[] = [
   },
   {
     name: 'Pig Lean',
+    category: 'Meat & Poultry',
     cpAboveFreezing: 3.6,
     cpBelowFreezing: 1.9,
     latentHeatOfFusion: 240,

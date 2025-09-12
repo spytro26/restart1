@@ -10,74 +10,100 @@ export const FREEZER_STORAGE_KEYS = {
 
 // Default values based on Excel spreadsheet for freezer - EXACT MATCH
 const defaultFreezerRoomData: RoomData = {
-    length: 10.7,  // Excel shows L = 10.7m
-    width: 6.1,    // Excel shows B = 6.1m  
-    height: 2.44,  // Excel shows H = 2.44m
+    length: 10.7,   // Excel shows 10.7m
+    width: 6.1,     // Excel shows 6.1m  
+    height: 2.44,   // Excel shows 2.44m
     lengthUnit: 'm',
-    wallUFactor: 0.295,    // Excel shows 0.295 W/m²·K
-    ceilingUFactor: 0.295, // Excel shows 0.295 W/m²·K
-    floorUFactor: 0.295,   // Excel shows 0.295 W/m²·K
-    wallHours: 24,         // Excel shows 24 hrs
-    ceilingHours: 24,      // Excel shows 24 hrs
-    floorHours: 24,        // Excel shows 24 hrs
+
+    // Insulation parameters (from Excel)
+    insulationType: 'PUF',              // Excel shows PUF - now with dropdown support
+    wallInsulationThickness: 150,       // Excel shows 150mm for freezer
+    ceilingInsulationThickness: 150,    // Excel shows 150mm for freezer
+    floorInsulationThickness: 150,      // Excel shows 150mm for freezer
+
+    wallUFactor: 0.153,    // Excel freezer value
+    ceilingUFactor: 0.153, // Excel freezer value
+    floorUFactor: 0.153,   // Excel freezer value
+    wallHours: 8,          // Excel shows 8 hrs
+    ceilingHours: 8,       // Excel shows 8 hrs  
+    floorHours: 8,         // Excel shows 8 hrs
 };
 
 const defaultFreezerProductData: FreezerProductData = {
     massBeforeFreezing: 3000, // Excel shows 3000 kg
     massUnit: 'kg',
-    cpAboveFreezing: 3.74,     // Excel shows 3.74 kJ/kg·K before freezing
-    cpBelowFreezing: 1.96,     // Excel shows 1.96 kJ/kg·K after freezing
-    latentHeatOfFusion: 233,   // Excel shows 233 kJ/kg latent heat
-    freezingPoint: -0.8,       // Excel shows -0.8°C freezing point
-    pullDownHours: 10,         // Excel shows 10 hrs for each phase
+    enteringTemp: 25,          // Product entering temp (Excel shows 25°C)
+    finalTemp: -15,            // Product final temp (Excel shows -15°C)
+    tempUnit: 'C',             // Temperature unit
+    cpAboveFreezing: 3.74,     // Excel shows 3.74 kJ/kg·K before freezing (Chicken)
+    cpBelowFreezing: 1.96,     // Excel shows 1.96 kJ/kg·K after freezing (Chicken)
+    latentHeatOfFusion: 233,   // Excel shows 233 kJ/kg latent heat (Chicken)
+    freezingPoint: -0.8,       // Excel shows -0.8°C freezing point (Chicken)
+    pullDownHours: 10,         // Excel shows 10 hrs for freezing process
     respirationMass: 3000,     // Same as mass
     watts: 0,                  // Excel shows 0 W/tonne for frozen products
-    productName: 'Custom',
+    productName: 'Chicken',    // Excel shows Chicken as the product
     overridePreset: false,
 };
 
 const defaultFreezerMiscData: FreezerMiscellaneousData = {
-    // Air Change - Excel values
-    airChangeRate: 0.4,        // Excel shows 0.4 air changes
-    enthalpyDiff: 0.1203,      // Excel shows 0.1203 kJ/L
-    hoursOfLoad: 16,           // Excel shows 16 hrs
+    // Air Change - Excel exact values
+    airChangeRate: 4.2,        // Excel shows 4.2 L/S air change rate
+    enthalpyDiff: 0.14,        // Excel shows 0.14 kJ/L enthalpy difference
+    hoursOfLoad: 16,           // Excel shows 16 hrs of load
 
-    // Equipment - Excel values
-    equipmentPower: 407,       // Excel shows 0.407 kW = 407W
+    // Equipment - Excel values (will be overridden by specific calculations)
+    equipmentPower: 1110,      // Total fan motor power = 0.37 * 3 * 1000 = 1110W
     equipmentUsageHours: 16,   // Excel shows 16 hrs
 
     // Lighting - Excel values
-    lightPower: 140,           // Excel shows 0.14 kW = 140W  
-    lightUsageHours: 16,       // Excel shows 16 hrs
+    lightPower: 1000,          // Excel shows 1.0 kW = 1000W
+    lightUsageHours: 1.2,      // Excel shows 1.2 hrs usage
 
-    // Door Heaters - Excel values
-    peripheralHeaters: 0,      // Excel shows 0 kW
-    doorHeaters: 243,          // Excel shows 0.243 kW = 243W
-    trayHeaters: 0,            // Excel shows 0 kW
+    // Heaters - Excel values (will be calculated specifically)
+    peripheralHeaters: 12000,  // Excel shows 1.5 kW * 8 heaters = 12000W
+    doorHeaters: 2160,         // Excel shows 0.27 kW * 8 doors = 2160W
+    trayHeaters: 2200,         // Excel shows 2.2 kW = 2200W
 
-    // Occupancy - Excel values (minimal for freezer)
-    occupancyCount: 0,         // Excel shows 0 people
-    occupancyHeatEquiv: 0,     // Excel shows 0 W/person
-    occupancyUsageHours: 0,    // Excel shows 0 hrs
+    // Occupancy - Excel values
+    occupancyCount: 4.6,       // Excel shows 4.6 people
+    occupancyHeatEquiv: 500,   // Excel shows 0.5 kW = 500W per person equivalent
+    occupancyUsageHours: 16,   // Excel shows 16 hrs
 
     // Temperature parameters from Excel - EXACT VALUES
     ambientTemp: 45,           // Excel shows 45°C ambient
-    roomTemp: -25,             // Excel shows -25°C freezer temperature
+    roomTemp: -25,             // Excel shows -25°C blast freezer temperature
     productIncoming: 25,       // Excel shows 25°C incoming product
     productOutgoing: -15,      // Excel shows -15°C outgoing product
     productOutgoingFreezer: -15, // Final freezer temperature
     tempUnit: 'C',
 
-    // Additional parameters from Excel
+    // Additional parameters from Excel - EXACT VALUES 
     dailyLoading: 3000,        // Excel shows 3000 kg/Day
-    insulationType: 'PUF',     // Excel shows PUF insulation
-    insulationThickness: 150,  // Excel shows 150mm for freezer
     cpAboveFreezingMisc: 3.74, // Excel shows 3.74 kJ/kg·K
     pullDownTime: 10,          // Excel shows 10 hrs
-    airFlowPerFan: 2000,       // Excel shows 2000 CFM
-    doorClearOpening: 900,     // Excel shows 900mm
-    storageCapacity: 10,       // Excel shows 10 kg/m³
-    maximumStorage: 26054,     // Excel calculation result
+    airFlowPerFan: 5847,       // Excel shows 5847 CFM per fan
+    doorClearOpening: 2100,    // Excel shows 2100 mm door clear opening
+    storageCapacity: 4,        // Excel shows 4 kg/cm (storage capacity)
+    maximumStorage: 5278,      // Excel shows 5278 Kgs maximum storage
+
+    // New Excel-specific parameters
+    fanMotorRating: 0.37,      // Excel shows 0.37 kW per fan
+    fanQuantity: 3,            // Excel shows quantity 3
+    numberOfPeople: 4.6,       // Excel shows 4.6 people
+    peopleUsageFactor: 0.5,    // Excel shows 0.5 usage factor
+    lightPowerKw: 1.0,         // Excel shows 1.0 kW lighting
+    lightUsageHours: 1.2,      // Excel shows 1.2 hrs lighting usage
+
+    // Heater specifications from Excel
+    peripheralHeaterPower: 1.5,    // Excel shows 1.5 kW per heater
+    peripheralHeaterQuantity: 8,   // Excel shows 8 heaters
+    doorHeaterPower: 0.27,         // Excel shows 0.27 kW per door
+    doorHeaterQuantity: 8,         // Excel shows 8 doors
+    trayHeaterPower: 2.2,          // Excel shows 2.2 kW per tray
+    trayHeaterQuantity: 1,         // Excel shows 1 tray heater
+    drainHeaterPower: 0.04,        // Excel shows 0.04 kW per drain
+    drainHeaterQuantity: 1,        // Excel shows 1 drain heater
 };
 
 type FreezerStorageContextValue = {

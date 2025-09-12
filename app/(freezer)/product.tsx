@@ -13,15 +13,22 @@ import { useFreezerStorageContext } from '@/hooks/FreezerStorageProvider';
 import { freezerProducts } from '@/data/freezerProducts';
 
 export default function FreezerProductTab() {
-  const { productData, saveProductData } = useFreezerStorageContext();
+  const { productData, saveProductData, miscData, saveMiscData } = useFreezerStorageContext();
 
   const handleValueChange = (field: string, value: string) => {
     const numericValue = parseFloat(value) || 0;
-    saveProductData({
-      ...productData,
-      [field]: numericValue,
-      overridePreset: field !== 'massBeforeFreezing' && field !== 'respirationMass',
-    });
+    if (field === 'productIncoming' || field === 'productOutgoing' || field === 'dailyLoading') {
+      saveMiscData({
+        ...miscData,
+        [field]: numericValue,
+      });
+    } else {
+      saveProductData({
+        ...productData,
+        [field]: numericValue,
+        overridePreset: field !== 'massBeforeFreezing' && field !== 'respirationMass',
+      });
+    }
   };
 
   const handleUnitChange = (field: string, unit: string) => {
@@ -65,12 +72,61 @@ export default function FreezerProductTab() {
           </View>
 
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Product Mass</Text>
+            <Text style={styles.sectionTitle}>Product Temperature Settings</Text>
 
             <View style={styles.inputRow}>
               <View style={styles.inputContainer}>
                 <InputField
-                  label="Mass Before Freezing"
+                  label="Product Entering Temperature"
+                  value={miscData.productIncoming.toString()}
+                  onChangeText={(value) => handleValueChange('productIncoming', value)}
+                  keyboardType="decimal-pad"
+                  placeholder="25"
+                />
+              </View>
+              <View style={styles.unitContainer}>
+                <Text style={styles.unitText}>°{miscData.tempUnit}</Text>
+              </View>
+            </View>
+
+            <View style={styles.inputRow}>
+              <View style={styles.inputContainer}>
+                <InputField
+                  label="Product Final Temperature"
+                  value={miscData.productOutgoing.toString()}
+                  onChangeText={(value) => handleValueChange('productOutgoing', value)}
+                  keyboardType="decimal-pad"
+                  placeholder="-15"
+                />
+              </View>
+              <View style={styles.unitContainer}>
+                <Text style={styles.unitText}>°{miscData.tempUnit}</Text>
+              </View>
+            </View>
+          </View>
+
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Product Weight & Loading</Text>
+
+            <View style={styles.inputRow}>
+              <View style={styles.inputContainer}>
+                <InputField
+                  label="Daily Loading"
+                  value={miscData.dailyLoading?.toString() || ''}
+                  onChangeText={(value) => handleValueChange('dailyLoading', value)}
+                  keyboardType="decimal-pad"
+                  placeholder="3000"
+                />
+              </View>
+              <View style={styles.unitContainer}>
+                <Text style={styles.unitText}>kg/Day</Text>
+              </View>
+            </View>
+
+            <View style={styles.inputRow}>
+              <View style={styles.inputContainer}>
+                <InputField
+                  label="Weight Before Freezing"
                   value={productData.massBeforeFreezing.toString()}
                   onChangeText={(value) => handleValueChange('massBeforeFreezing', value)}
                   keyboardType="decimal-pad"
@@ -89,7 +145,7 @@ export default function FreezerProductTab() {
             <View style={styles.inputRow}>
               <View style={styles.inputContainer}>
                 <InputField
-                  label="Respiration Mass"
+                  label="Weight for Respiration"
                   value={productData.respirationMass.toString()}
                   onChangeText={(value) => handleValueChange('respirationMass', value)}
                   keyboardType="decimal-pad"

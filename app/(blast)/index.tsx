@@ -7,6 +7,7 @@ import {
     SafeAreaView,
 } from 'react-native';
 import { InputField } from '@/components/InputField';
+import { InsulationTypePicker } from '@/components/InsulationTypePicker';
 import { useBlastStorageContext } from '@/hooks/BlastStorageProvider';
 
 export default function BlastRoomDetailsTab() {
@@ -20,133 +21,129 @@ export default function BlastRoomDetailsTab() {
         });
     };
 
+    const handleStringChange = (field: string, value: string) => {
+        saveRoomData({
+            ...roomData,
+            [field]: value,
+        });
+    };
+
+    const handleUnitChange = (field: string, unit: string) => {
+        saveRoomData({
+            ...roomData,
+            [field]: unit,
+        });
+    };
+
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
                 <View style={styles.content}>
                     <View style={styles.header}>
-                        <Text style={styles.title}>Blast Freezer Transmission Load</Text>
-                        <Text style={styles.subtitle}>Enter transmission parameters for heat load calculation</Text>
+                        <Text style={styles.title}>Blast Freezer Room Details</Text>
+                        <Text style={styles.subtitle}>Enter room dimensions and temperature parameters</Text>
                     </View>
 
                     <View style={styles.section}>
-                        <Text style={styles.sectionTitle}>Wall Parameters</Text>
+                        <Text style={styles.sectionTitle}>Room Dimensions</Text>
 
                         <InputField
-                            label="U-Factor"
-                            value={roomData.wallUFactor.toString()}
-                            onChangeText={(value) => handleValueChange('wallUFactor', value)}
+                            label="Length"
+                            value={roomData.length.toString()}
+                            onChangeText={(value) => handleValueChange('length', value)}
                             keyboardType="decimal-pad"
-                            placeholder="0.153"
-                            unit="W/m²·K"
+                            placeholder="5"
+                            unitOptions={['m', 'ft']}
+                            selectedUnit={roomData.lengthUnit === 'ft' ? 'ft' : 'm'}
+                            onUnitChange={(unit) => handleUnitChange('lengthUnit', unit === 'ft' ? 'ft' : 'm')}
                         />
 
                         <InputField
-                            label="Area"
-                            value={roomData.wallArea.toString()}
-                            onChangeText={(value) => handleValueChange('wallArea', value)}
+                            label="Width"
+                            value={roomData.width.toString()}
+                            onChangeText={(value) => handleValueChange('width', value)}
                             keyboardType="decimal-pad"
-                            placeholder="70"
-                            unit="m²"
+                            placeholder="5"
+                            unitOptions={['m', 'ft']}
+                            selectedUnit={roomData.lengthUnit === 'ft' ? 'ft' : 'm'}
+                            onUnitChange={(unit) => handleUnitChange('lengthUnit', unit === 'ft' ? 'ft' : 'm')}
                         />
 
                         <InputField
-                            label="Temperature Difference"
-                            value={roomData.wallTempDiff.toString()}
-                            onChangeText={(value) => handleValueChange('wallTempDiff', value)}
+                            label="Height"
+                            value={roomData.height.toString()}
+                            onChangeText={(value) => handleValueChange('height', value)}
                             keyboardType="decimal-pad"
-                            placeholder="78"
-                            unit="K"
-                        />
-
-                        <InputField
-                            label="Hours of Load"
-                            value={roomData.wallHours.toString()}
-                            onChangeText={(value) => handleValueChange('wallHours', value)}
-                            keyboardType="decimal-pad"
-                            placeholder="8"
-                            unit="hrs"
-                        />
-                    </View>
-
-                    <View style={styles.section}>
-                        <Text style={styles.sectionTitle}>Ceiling Parameters</Text>
-
-                        <InputField
-                            label="U-Factor"
-                            value={roomData.ceilingUFactor.toString()}
-                            onChangeText={(value) => handleValueChange('ceilingUFactor', value)}
-                            keyboardType="decimal-pad"
-                            placeholder="0.153"
-                            unit="W/m²·K"
-                        />
-
-                        <InputField
-                            label="Area"
-                            value={roomData.ceilingArea.toString()}
-                            onChangeText={(value) => handleValueChange('ceilingArea', value)}
-                            keyboardType="decimal-pad"
-                            placeholder="25"
-                            unit="m²"
-                        />
-
-                        <InputField
-                            label="Temperature Difference"
-                            value={roomData.ceilingTempDiff.toString()}
-                            onChangeText={(value) => handleValueChange('ceilingTempDiff', value)}
-                            keyboardType="decimal-pad"
-                            placeholder="78"
-                            unit="K"
-                        />
-
-                        <InputField
-                            label="Hours of Load"
-                            value={roomData.ceilingHours.toString()}
-                            onChangeText={(value) => handleValueChange('ceilingHours', value)}
-                            keyboardType="decimal-pad"
-                            placeholder="8"
-                            unit="hrs"
+                            placeholder="3.5"
+                            unitOptions={['m', 'ft']}
+                            selectedUnit={roomData.lengthUnit === 'ft' ? 'ft' : 'm'}
+                            onUnitChange={(unit) => handleUnitChange('lengthUnit', unit === 'ft' ? 'ft' : 'm')}
                         />
                     </View>
 
                     <View style={styles.section}>
-                        <Text style={styles.sectionTitle}>Floor Parameters</Text>
+                        <Text style={styles.sectionTitle}>Temperature Parameters</Text>
 
                         <InputField
-                            label="U-Factor"
-                            value={roomData.floorUFactor.toString()}
-                            onChangeText={(value) => handleValueChange('floorUFactor', value)}
+                            label="Ambient Temperature"
+                            value={roomData.ambientTemp.toString()}
+                            onChangeText={(value) => handleValueChange('ambientTemp', value)}
                             keyboardType="decimal-pad"
-                            placeholder="0.153"
-                            unit="W/m²·K"
+                            placeholder="43"
+                            unitOptions={['°C', '°F']}
+                            selectedUnit={roomData.tempUnit === 'F' ? '°F' : '°C'}
+                            onUnitChange={(unit) => handleUnitChange('tempUnit', unit === '°F' ? 'F' : 'C')}
                         />
 
                         <InputField
-                            label="Area"
-                            value={roomData.floorArea.toString()}
-                            onChangeText={(value) => handleValueChange('floorArea', value)}
+                            label="Room Temperature"
+                            value={roomData.roomTemp.toString()}
+                            onChangeText={(value) => handleValueChange('roomTemp', value)}
+                            keyboardType="numbers-and-punctuation"
+                            placeholder="-35"
+                            unitOptions={['°C', '°F']}
+                            selectedUnit={roomData.tempUnit === 'F' ? '°F' : '°C'}
+                            onUnitChange={(unit) => handleUnitChange('tempUnit', unit === '°F' ? 'F' : 'C')}
+                        />
+                    </View>
+
+                    <View style={styles.section}>
+                        <Text style={styles.sectionTitle}>Insulation Parameters</Text>
+
+                        <Text style={styles.subsectionTitle}>Insulation Type</Text>
+                        <InsulationTypePicker
+                            selected={roomData.insulationType}
+                            onSelect={(type) => handleStringChange('insulationType', type)}
+                        />
+
+                        <Text style={styles.subsectionTitle}>Insulation Thickness (mm)</Text>
+                        <InputField
+                            label="Wall Insulation Thickness"
+                            value={roomData.wallInsulationThickness.toString()}
+                            onChangeText={(value) => handleValueChange('wallInsulationThickness', value)}
                             keyboardType="decimal-pad"
-                            placeholder="25"
-                            unit="m²"
+                            placeholder="150"
+                            unit="mm"
                         />
 
                         <InputField
-                            label="Temperature Difference"
-                            value={roomData.floorTempDiff.toString()}
-                            onChangeText={(value) => handleValueChange('floorTempDiff', value)}
+                            label="Ceiling Insulation Thickness"
+                            value={roomData.ceilingInsulationThickness.toString()}
+                            onChangeText={(value) => handleValueChange('ceilingInsulationThickness', value)}
                             keyboardType="decimal-pad"
-                            placeholder="63"
-                            unit="K"
+                            placeholder="150"
+                            unit="mm"
                         />
 
                         <InputField
-                            label="Hours of Load"
-                            value={roomData.floorHours.toString()}
-                            onChangeText={(value) => handleValueChange('floorHours', value)}
+                            label="Floor Insulation Thickness"
+                            value={roomData.floorInsulationThickness.toString()}
+                            onChangeText={(value) => handleValueChange('floorInsulationThickness', value)}
                             keyboardType="decimal-pad"
-                            placeholder="8"
-                            unit="hrs"
+                            placeholder="150"
+                            unit="mm"
                         />
+
                     </View>
 
                     <View style={styles.footer}>
@@ -190,6 +187,13 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         color: '#1e40af',
         marginBottom: 16,
+    },
+    subsectionTitle: {
+        fontSize: 16,
+        fontWeight: '600',
+        color: '#374151',
+        marginTop: 16,
+        marginBottom: 12,
     },
     footer: {
         marginTop: 32,

@@ -89,7 +89,7 @@ export default function FreezerTabsLayout() {
           options={{
             title: 'Product',
             tabBarIcon: ({ color, size }) => (
-              <Ionicons name="snow-outline" size={size} color={color} />
+              <Ionicons name="leaf-outline" size={size} color={color} />
             ),
           }}
         />

@@ -9,58 +9,67 @@ export const BLAST_STORAGE_KEYS = {
 
 // Blast freezer specific data types based on Excel
 export interface BlastRoomData {
-    // Transmission Load - Excel values
-    wallUFactor: number;        // W/m²K - Excel shows 0.153
-    ceilingUFactor: number;     // W/m²K - Excel shows 0.153  
-    floorUFactor: number;       // W/m²K - Excel shows 0.153
-    wallArea: number;           // m² - Excel shows 70
-    ceilingArea: number;        // m² - Excel shows 25
-    floorArea: number;          // m² - Excel shows 25
-    wallTempDiff: number;       // K - Excel shows 78
-    ceilingTempDiff: number;    // K - Excel shows 78
-    floorTempDiff: number;      // K - Excel shows 63
-    wallHours: number;          // hrs - Excel shows 8
-    ceilingHours: number;       // hrs - Excel shows 8
-    floorHours: number;         // hrs - Excel shows 8
-}
+    // Room Dimensions - Excel shows L=5, B=5, H=3.5
+    length: number;             // Excel shows 5m
+    width: number;              // Excel shows 5m  
+    height: number;             // Excel shows 3.5m
+    lengthUnit: 'm' | 'ft';
 
-export interface BlastProductData {
-    // Product Load - Excel values
-    massBeforeFreezing: number;  // kg - Excel shows 2000
-    massLatentHeat: number;      // kg - Excel shows 2000  
-    massAfterFreezing: number;   // kg - Excel shows 2000
-    cpAboveFreezing: number;     // kJ/kg·K - Excel shows 3.49
-    cpBelowFreezing: number;     // kJ/kg·K - Excel shows 2.14
-    tempDiffAbove: number;       // K - Excel shows -3.3
-    tempDiffBelow: number;       // K - Excel shows -28.3
-    pullDownHours: number;       // hrs - Excel shows 8
-    latentHeat: number;          // kJ/kg - Excel shows 233
+    // Temperature parameters - Excel D52, D53
+    ambientTemp: number;        // Excel shows 43°C
+    roomTemp: number;           // Excel shows -35°C
+    tempUnit: 'C' | 'F';
+
+    // Insulation parameters - Excel D48
+    insulationType: string;          // Excel shows PUF
+    wallInsulationThickness: number;     // Excel shows 150mm - USED in U-factor calculation
+    ceilingInsulationThickness: number;  // Excel shows 150mm - USED in U-factor calculation
+    floorInsulationThickness: number;    // Excel shows 150mm - USED in U-factor calculation
+
+    // Unit preferences
+    areaUnit: 'm²' | 'ft²';     // Area unit preference
+}export interface BlastProductData {
+    // Product temperature parameters - Excel D54, D55
+    productEnteringTemp: number; // Excel shows -5°C
+    productFinalTemp: number;    // Excel shows -30°C
+    tempUnit: 'C' | 'F';
+
+    // Product Load - Excel Section 2
+    // Note: Mass values are taken from miscData.capacityRequired, not from product data
+    cpAboveFreezing: number;     // kJ/kg·K - Excel shows 3.49 - USED in product calculations
+    cpBelowFreezing: number;     // kJ/kg·K - Excel shows 2.14 - USED in product calculations
+    pullDownHours: number;       // hrs - Excel shows 8 - USED in product calculations
+    latentHeat: number;          // kJ/kg - Excel shows 233 - USED in product calculations
     productName: string;         // Excel shows "Chicken"
+    freezingPoint: number;       // Excel shows -1.7°C - USED in temperature difference calculations
+
+    // Unit preferences
+    massUnit: 'kg' | 'lbs';      // Mass unit preference
 }
 
 export interface BlastMiscellaneousData {
-    // Air Change Load - Excel values
+    // Air Change Load - Excel Section 3
     airChangeRate: number;       // Air change rate(L/S) - Excel shows 4.2
     enthalpyDiff: number;        // Enthalpy diff (kJ/L) - Excel shows 0.14
     hoursOfLoad: number;         // Hours of load - Excel shows 2
 
-    // Equipment Load - Excel values
+    // Equipment Load - Excel Section 4a
     fanMotorRating: number;      // kW - Excel shows 0.37
     equipmentQuantity: number;   // Quantity - Excel shows 3
     equipmentHours: number;      // Usage in Hrs - Excel shows 8
 
-    // Occupancy - Excel values
-    occupancyCount: number;      // No of people - Excel shows 4.6
-    occupancyHeatLoad: number;   // Light load (W) - Excel shows 0.5
+    // Occupancy - Excel Section 4b
+    occupancyCount: number;      // No of people - Excel shows 1.0
+    occupancyHeatLoad: number;   // Heat load per person - Excel shows 0.5
     occupancyHours: number;      // Hours - Excel shows 1
 
-    // Light Load - Excel values
+    // Light Load - Excel Section 4c
     lightLoad: number;           // Light load (W) - Excel shows 0.1
     lightHours: number;          // Hours - Excel shows 1.2
 
-    // Heaters - Excel values
-    peripheralHeaterCapacity: number;  // Heater capacity(kW) - Excel shows 1.6
-    peripheralHeaterCount: number;     // No of heaters - Excel shows 3
+    // Heaters - Excel Section 4d,4e,4f,4g
+    peripheralHeaterCapacity: number;  // Heater capacity(kW) - Excel shows 1.5
+    peripheralHeaterCount: number;     // No of heaters - Excel shows 1
     peripheralHeaterHours: number;     // Hours - Excel shows 8
 
     doorHeaterCapacity: number;        // Heater capacity(kW) - Excel shows 0.27
@@ -75,51 +84,53 @@ export interface BlastMiscellaneousData {
     drainHeaterCount: number;          // - Excel shows 1
     drainHeaterHours: number;          // Hours - Excel shows 8
 
-    // Temperature parameters - Excel values
-    ambientTemp: number;               // Excel shows 43°C
-    roomTemp: number;                  // Excel shows -35°C
-    productIncoming: number;           // Excel shows -5°C
-    productOutgoing: number;           // Excel shows -30°C
-    tempUnit: 'C' | 'F';
-
     // Additional parameters from Excel
-    capacityRequired: number;          // Excel shows 2000 kgs
-    batchHours: number;               // Excel shows 8 Hrs
-    internalVolume: number;           // Excel shows 3.5 M3
-    insulationType: string;           // Excel shows PUF
-    insulationThickness: number;      // Excel shows 150mm
-    maxStorage: number;               // Excel shows 9279 Kgs
+    capacityRequired: number;          // Excel shows 2000 kgs - USED in product calculations
+    batchHours: number;               // Excel shows 8 Hrs - USED in product calculations
+
+    // Unit preferences
+    capacityUnit: 'kg' | 'lbs';       // Capacity unit preference
+    volumeUnit: 'm³' | 'ft³';         // Volume unit preference
 }
 
 // Default values based on Excel spreadsheet for blast freezer - EXACT MATCH
 const defaultBlastRoomData: BlastRoomData = {
-    // Transmission Load - Excel Section 1
-    wallUFactor: 0.153,        // Excel D8
-    ceilingUFactor: 0.153,     // Excel D9
-    floorUFactor: 0.153,       // Excel D10
-    wallArea: 70,              // Excel E8
-    ceilingArea: 25,           // Excel E9
-    floorArea: 25,             // Excel E10
-    wallTempDiff: 78,          // Excel F8
-    ceilingTempDiff: 78,       // Excel F9
-    floorTempDiff: 63,         // Excel F10
-    wallHours: 8,              // Excel G8
-    ceilingHours: 8,           // Excel G9
-    floorHours: 8,             // Excel G10
-};
+    // Room Dimensions - Excel shows L=5, B=5, H=3.5
+    length: 5,                 // Excel shows 5m
+    width: 5,                  // Excel shows 5m
+    height: 3.5,               // Excel shows 3.5m
+    lengthUnit: 'm',
 
-const defaultBlastProductData: BlastProductData = {
+    // Temperature parameters - Excel D52, D53
+    ambientTemp: 43,           // Excel D52
+    roomTemp: -35,             // Excel D53
+    tempUnit: 'C',
+
+    // Insulation parameters - Excel D48
+    insulationType: 'PUF',          // Excel D47
+    wallInsulationThickness: 150,   // Excel D48 - 150mm - USED in U-factor calculation
+    ceilingInsulationThickness: 150, // Excel D48 - 150mm - USED in U-factor calculation
+    floorInsulationThickness: 150,   // Excel D48 - 150mm - USED in U-factor calculation
+
+    // Unit preferences
+    areaUnit: 'm²',
+}; const defaultBlastProductData: BlastProductData = {
+    // Product temperature parameters - Excel D54, D55
+    productEnteringTemp: -5,    // Excel D54
+    productFinalTemp: -30,      // Excel D55
+    tempUnit: 'C',
+
     // Product Load - Excel Section 2
-    massBeforeFreezing: 2000,   // Excel D14
-    massLatentHeat: 2000,       // Excel D15
-    massAfterFreezing: 2000,    // Excel D16
-    cpAboveFreezing: 3.49,      // Excel E14
-    cpBelowFreezing: 2.14,      // Excel E16
-    tempDiffAbove: -3.3,        // Excel F14
-    tempDiffBelow: -28.3,       // Excel F16
-    pullDownHours: 8,           // Excel G14,G15,G16
-    latentHeat: 233,            // Excel F15
+    // Note: Mass values (2000 kg) are taken from miscData.capacityRequired, not from product data
+    cpAboveFreezing: 3.49,      // Excel E14 - USED in product calculations
+    cpBelowFreezing: 2.14,      // Excel E16 - USED in product calculations
+    pullDownHours: 8,           // Excel G14,G15,G16 - USED in product calculations
+    latentHeat: 233,            // Excel F15 - USED in product calculations
     productName: 'Chicken',     // Excel shows Chicken
+    freezingPoint: -1.7,        // Excel D59 - USED in temperature difference calculations
+
+    // Unit preferences
+    massUnit: 'kg',
 };
 
 const defaultBlastMiscData: BlastMiscellaneousData = {
@@ -134,7 +145,7 @@ const defaultBlastMiscData: BlastMiscellaneousData = {
     equipmentHours: 8,          // Excel F23
 
     // Occupancy - Excel Section 4b
-    occupancyCount: 4.6,        // Excel E24
+    occupancyCount: 1.0,        // Excel E25
     occupancyHeatLoad: 0.5,     // Excel E25
     occupancyHours: 1,          // Excel F25
 
@@ -143,8 +154,8 @@ const defaultBlastMiscData: BlastMiscellaneousData = {
     lightHours: 1.2,            // Excel F27
 
     // Heaters - Excel Section 4d,4e,4f,4g
-    peripheralHeaterCapacity: 1.6,  // Excel D29
-    peripheralHeaterCount: 3,       // Excel E29
+    peripheralHeaterCapacity: 1.5,  // Excel D29
+    peripheralHeaterCount: 1,       // Excel E29
     peripheralHeaterHours: 8,       // Excel F29
 
     doorHeaterCapacity: 0.27,       // Excel D31
@@ -159,56 +170,50 @@ const defaultBlastMiscData: BlastMiscellaneousData = {
     drainHeaterCount: 1,            // Excel E34
     drainHeaterHours: 8,            // Excel F34
 
-    // Temperature parameters from Excel
-    ambientTemp: 43,                // Excel D52
-    roomTemp: -35,                  // Excel D53
-    productIncoming: -5,            // Excel D54
-    productOutgoing: -30,           // Excel D55
-    tempUnit: 'C',
-
     // Additional parameters from Excel
-    capacityRequired: 2000,         // Excel D45
-    batchHours: 8,                  // Excel D46
-    internalVolume: 3.5,            // Excel D48
-    insulationType: 'PUF',          // Excel D47
-    insulationThickness: 150,       // Excel D48
-    maxStorage: 9279,              // Excel D63
+    capacityRequired: 2000,         // Excel D45 - USED in product calculations
+    batchHours: 8,                  // Excel D46 - USED in product calculations
+
+    // Unit preferences
+    capacityUnit: 'kg',
+    volumeUnit: 'm³',
 };
 
 export interface BlastCalculationResults {
-    // Transmission loads - Excel calculations
-    wallLoad: number;              // Excel H8: =(E8*F8*G8*D8)/1000
-    ceilingLoad: number;           // Excel H9: =(E9*F9*G9*D9)/1000  
-    floorLoad: number;             // Excel H10: =(E10*F10*G10*D10)/1000
-    totalTransmissionLoad: number; // Excel I8: =H8+H9+H10
+    // Transmission loads - Excel calculations (Section 1)
+    wallLoad: number;              // Excel G8: =((E8*D8*C8)/1000)*3600*F8
+    ceilingLoad: number;           // Excel G9: =((E9*D9*C9)/1000)*3600*F9
+    floorLoad: number;             // Excel G10: =((E10*D10*C10)/1000)*3600*F10
+    totalTransmissionLoad: number; // Sum of wall+ceiling+floor
 
-    // Product loads - Excel calculations
-    beforeFreezingLoad: number;    // Excel H14: =(D14*E14*F14*G14)/3600
-    latentHeatLoad: number;        // Excel H15: =(D15*F15*G15)/3600
-    afterFreezingLoad: number;     // Excel H16: =(D16*E16*F16*G16)/3600
-    totalProductLoad: number;      // Excel I14: =H14+H15+H16
+    // Product loads - Excel calculations (Section 2)
+    beforeFreezingLoad: number;    // Excel G14: =C14*D14*E14*(D46/F14)
+    latentHeatLoad: number;        // Excel G15: =(C15*D15)*(D46/F15)
+    afterFreezingLoad: number;     // Excel G16: =(C16*D16*E16)*(D46/F16)
+    totalProductLoad: number;      // Sum of before+latent+after
 
-    // Air change load - Excel calculation
-    airChangeLoad: number;         // Excel H20: =(D20*E20*F20)/1000
+    // Air change load - Excel calculation (Section 3)
+    airChangeLoad: number;         // Excel G20: =C20*D20*3600*F20
 
-    // Equipment loads - Excel calculations
-    equipmentLoad: number;         // Excel H23: =D23*E23*F23
-    occupancyLoad: number;         // Excel H25: =E24*E25*F25/1000
-    lightLoad: number;             // Excel H27: =D27*F27
-    peripheralHeaterLoad: number;  // Excel H29: =D29*E29*F29
-    doorHeaterLoad: number;        // Excel H31: =D31*E31*F31
-    trayHeaterLoad: number;        // Excel H33: =D33*E33*F33
-    drainHeaterLoad: number;       // Excel H34: =D34*E34*F34
-    totalMiscLoad: number;         // Excel I23: =H23+H25+H27+H29+H31+H33+H34
+    // Equipment loads - Excel calculations (Section 4)
+    equipmentLoad: number;         // Excel G23: =(C23*D23*3600*F23)
+    occupancyLoad: number;         // Excel G25: =(C25*D25)*3600*F25
+    lightLoad: number;             // Excel G27: =(C27*3.6)*F27
+    peripheralHeaterLoad: number;  // Excel G29: =(C29*D29*3600*F29)
+    doorHeaterLoad: number;        // Excel G31: =(C31*D31*3600*F31)
+    trayHeaterLoad: number;        // Excel G33: =(C33*D33*3600*F33)
+    drainHeaterLoad: number;       // Excel G34: =(C34*D34*3600*F34)
+    totalMiscLoad: number;         // Sum of all miscellaneous loads
 
     // Final results - Excel calculations
-    totalLoadKJ: number;           // Excel G36: =SUM(I8,I14,H20,I23)
-    totalLoadKw: number;           // Excel G37: =G36/3600
+    totalLoadKJ: number;           // Excel G36: =SUM(G8:G34)
+    totalLoadKw: number;           // Excel G37: =G36/(3600*D46)
     totalLoadTR: number;           // Excel G38: =G37/3.517
-    totalLoadTRWithSafety: number; // TR with 20% safety factor
-    capacityIncludingSafety: number; // Safety factor percentage (20%)
-    sensibleHeatKJ24Hr: number;    // Excel G40: =SUM(I8,G14)+SUM(H20,I23)
-    latentHeatKJ24Hr: number;      // Excel G41: =H15
+    capacityIncludingSafety: number; // Excel G39: =G38*(100+D39)/100
+    sensibleHeatKJ24Hr: number;    // Excel G40: =SUM(G8:G14)+SUM(G16:G17)+0.4*C
+    latentHeatKJ24Hr: number;      // Excel G41: =G15+0.6*G20+0.6*G25
+    shr: number;                   // Excel G42: =G40/(G40+G41)
+    airQtyRequiredCfm: number;     // Excel G43: =((G37*12000)*G42)/(5*1.08)
     refrigerationCapacity: number;  // Final TR with safety factor
 }
 
@@ -258,73 +263,11 @@ export const BlastStorageProvider: React.FC<React.PropsWithChildren> = ({ childr
         triggerGlobalUpdate();
     };
 
-    // Calculate results using EXACT Excel formulas
+    // Calculate results using EXACT Excel formulas with U-factor calculation
     const calculateResults = (): BlastCalculationResults => {
-        // Transmission loads - Excel formulas (Area × TempDiff × Hours × U-Factor) / 1000
-        const wallLoad = (roomData.wallArea * roomData.wallTempDiff * roomData.wallHours * roomData.wallUFactor) / 1000;
-        const ceilingLoad = (roomData.ceilingArea * roomData.ceilingTempDiff * roomData.ceilingHours * roomData.ceilingUFactor) / 1000;
-        const floorLoad = (roomData.floorArea * roomData.floorTempDiff * roomData.floorHours * roomData.floorUFactor) / 1000;
-        const totalTransmissionLoad = wallLoad + ceilingLoad + floorLoad;
-
-        // Product loads - Excel formulas (Mass × Cp × TempDiff × Hours) / 3600
-        const beforeFreezingLoad = (productData.massBeforeFreezing * productData.cpAboveFreezing * productData.tempDiffAbove * productData.pullDownHours) / 3600;
-        const latentHeatLoad = (productData.massLatentHeat * productData.latentHeat * productData.pullDownHours) / 3600;
-        const afterFreezingLoad = (productData.massAfterFreezing * productData.cpBelowFreezing * productData.tempDiffBelow * productData.pullDownHours) / 3600;
-        const totalProductLoad = beforeFreezingLoad + latentHeatLoad + afterFreezingLoad;
-
-        // Air change load - Excel formula (Rate × Enthalpy × Hours) / 1000
-        const airChangeLoad = (miscData.airChangeRate * miscData.enthalpyDiff * miscData.hoursOfLoad) / 1000;
-
-        // Equipment loads - Excel formulas (keep in kWh first for display, then convert)
-        const equipmentLoadKWh = miscData.fanMotorRating * miscData.equipmentQuantity * miscData.equipmentHours;
-        const occupancyLoadKWh = (miscData.occupancyCount * miscData.occupancyHeatLoad * miscData.occupancyHours) / 1000;
-        const lightLoadKWh = miscData.lightLoad * miscData.lightHours;
-        const peripheralHeaterLoadKWh = miscData.peripheralHeaterCapacity * miscData.peripheralHeaterCount * miscData.peripheralHeaterHours;
-        const doorHeaterLoadKWh = miscData.doorHeaterCapacity * miscData.doorHeaterCount * miscData.doorHeaterHours;
-        const trayHeaterLoadKWh = miscData.trayHeaterCapacity * miscData.trayHeaterCount * miscData.trayHeaterHours;
-        const drainHeaterLoadKWh = miscData.drainHeaterCapacity * miscData.drainHeaterCount * miscData.drainHeaterHours;
-        const totalMiscLoadKWh = equipmentLoadKWh + occupancyLoadKWh + lightLoadKWh + peripheralHeaterLoadKWh + doorHeaterLoadKWh + trayHeaterLoadKWh + drainHeaterLoadKWh;
-
-        // Convert miscellaneous loads to kJ for final calculation (kWh × 3600 = kJ)
-        const totalMiscLoadKJ = totalMiscLoadKWh * 3600;
-
-        // Final calculations - Excel formulas
-        const totalLoadKJ = totalTransmissionLoad + totalProductLoad + airChangeLoad + totalMiscLoadKJ;
-        const totalLoadKw = totalLoadKJ / 3600;
-        const totalLoadTR = totalLoadKw / 3.517;
-        const capacityIncludingSafety = 20; // 20% safety factor
-        const totalLoadTRWithSafety = totalLoadTR * (1 + capacityIncludingSafety / 100);
-        const sensibleHeatKJ24Hr = totalTransmissionLoad + beforeFreezingLoad + afterFreezingLoad + airChangeLoad + totalMiscLoadKJ;
-        const latentHeatKJ24Hr = latentHeatLoad;
-        const refrigerationCapacity = totalLoadTRWithSafety;
-
-        return {
-            wallLoad,
-            ceilingLoad,
-            floorLoad,
-            totalTransmissionLoad,
-            beforeFreezingLoad,
-            latentHeatLoad,
-            afterFreezingLoad,
-            totalProductLoad,
-            airChangeLoad,
-            equipmentLoad: equipmentLoadKWh,
-            occupancyLoad: occupancyLoadKWh,
-            lightLoad: lightLoadKWh,
-            peripheralHeaterLoad: peripheralHeaterLoadKWh,
-            doorHeaterLoad: doorHeaterLoadKWh,
-            trayHeaterLoad: trayHeaterLoadKWh,
-            drainHeaterLoad: drainHeaterLoadKWh,
-            totalMiscLoad: totalMiscLoadKWh,
-            totalLoadKJ,
-            totalLoadKw,
-            totalLoadTR,
-            totalLoadTRWithSafety,
-            capacityIncludingSafety,
-            sensibleHeatKJ24Hr,
-            latentHeatKJ24Hr,
-            refrigerationCapacity,
-        };
+        // Use the centralized calculation function from utils
+        const { calculateBlastHeatLoad } = require('@/utils/calculations');
+        return calculateBlastHeatLoad(roomData, productData, miscData);
     };
 
     const value = useMemo<BlastStorageContextValue>(() => ({

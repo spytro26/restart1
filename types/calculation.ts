@@ -4,6 +4,12 @@ export interface RoomData {
   height: number;
   lengthUnit: 'm' | 'ft';
   
+  // Insulation data
+  insulationType: string;
+  wallInsulationThickness: number;
+  ceilingInsulationThickness: number;
+  floorInsulationThickness: number;
+  
   // Transmission data
   wallUFactor: number;
   ceilingUFactor: number;
@@ -16,7 +22,15 @@ export interface RoomData {
 export interface ProductData {
   massBeforeFreezing: number;
   massUnit: 'kg' | 'lbs';
+  
+  // Product temperatures - NEW FIELDS
+  enteringTemp: number;        // Product entering temperature
+  finalTemp: number;           // Product final temperature  
+  tempUnit: 'C' | 'F';        // Temperature unit for product temps
+  
   cpAboveFreezing: number;
+  cpBelowFreezing?: number; // Optional for products that may freeze
+  freezingPoint?: number; // Optional freezing point
   pullDownHours: number;
   
   // Respiration
@@ -44,6 +58,24 @@ export interface FreezerProductData extends ProductData {
 export interface FreezerMiscellaneousData extends MiscellaneousData {
   // Freezer-specific parameters
   productOutgoingFreezer?: number; // Final temperature after freezing
+  
+  // Additional Excel parameters for blast freezer
+  fanMotorRating?: number; // kW per fan
+  fanQuantity?: number; // Number of fans
+  numberOfPeople?: number; // Excel shows 4.6 people
+  peopleUsageFactor?: number; // Excel shows 0.5 usage factor
+  lightPowerKw?: number; // kW lighting power
+  lightUsageHours?: number; // Hours of lighting usage
+  
+  // Heater specifications from Excel
+  peripheralHeaterPower?: number; // kW per heater
+  peripheralHeaterQuantity?: number; // Number of peripheral heaters
+  doorHeaterPower?: number; // kW per door heater
+  doorHeaterQuantity?: number; // Number of door heaters
+  trayHeaterPower?: number; // kW per tray heater
+  trayHeaterQuantity?: number; // Number of tray heaters
+  drainHeaterPower?: number; // kW per drain heater
+  drainHeaterQuantity?: number; // Number of drain heaters
 }
 
 export interface MiscellaneousData {
@@ -73,14 +105,12 @@ export interface MiscellaneousData {
   // Temperature parameters
   ambientTemp: number;
   roomTemp: number;
-  productIncoming: number;
-  productOutgoing: number;
+  productIncoming: number;  // Product entering temperature
+  productOutgoing: number;  // Product final temperature
   tempUnit: 'C' | 'F';
   
   // Additional Excel parameters
   dailyLoading?: number;
-  insulationType?: string;
-  insulationThickness?: number;
   cpAboveFreezingMisc?: number;
   pullDownTime?: number;
   airFlowPerFan?: number;
@@ -138,8 +168,11 @@ export interface CalculationResults {
   
   // Additional Excel matching properties
   dailyLoading?: number;
-  insulationType?: string;
-  insulationThickness?: number;
+  
+  // Storage capacity validation (Excel methodology)
+  storageCapacityValid?: boolean;
+  maxStorageCapacity?: number;
+  storageUtilization?: number;
 }
 
 // Freezer-specific calculation results

@@ -7,22 +7,20 @@ import {
     SafeAreaView,
 } from 'react-native';
 import { InputField } from '@/components/InputField';
-import { BlastProductPicker } from '@/components/BlastProductPicker';
+import { CategorizedBlastProductPicker } from '@/components/CategorizedBlastProductPicker';
 import { useBlastStorageContext } from '@/hooks/BlastStorageProvider';
-import { freezerProducts } from '@/data/freezerProducts';
 
 export default function BlastProductTab() {
     const { productData, saveProductData } = useBlastStorageContext();
 
-    const handleProductSelect = (productName: string) => {
-        const selectedProduct = freezerProducts.find(p => p.name === productName);
-        if (selectedProduct) {
+    const handleProductSelect = (productName: string, productInfo?: any) => {
+        if (productInfo) {
             saveProductData({
                 ...productData,
                 productName,
-                cpAboveFreezing: selectedProduct.cpAboveFreezing,
-                cpBelowFreezing: selectedProduct.cpBelowFreezing,
-                latentHeat: selectedProduct.latentHeatOfFusion,
+                cpAboveFreezing: productInfo.cpAboveFreezing,
+                cpBelowFreezing: productInfo.cpBelowFreezing,
+                latentHeat: productInfo.latentHeatOfFusion,
             });
         }
     };
@@ -32,6 +30,13 @@ export default function BlastProductTab() {
         saveProductData({
             ...productData,
             [field]: numericValue,
+        });
+    };
+
+    const handleUnitChange = (field: string, unit: string) => {
+        saveProductData({
+            ...productData,
+            [field]: unit,
         });
     };
 
@@ -47,9 +52,31 @@ export default function BlastProductTab() {
                     <View style={styles.section}>
                         <Text style={styles.sectionTitle}>Product Information</Text>
 
-                        <BlastProductPicker
+                        <CategorizedBlastProductPicker
                             selected={productData.productName || 'Custom'}
                             onSelect={handleProductSelect}
+                        />
+
+                        <InputField
+                            label="Product Entering Temp"
+                            value={productData.productEnteringTemp.toString()}
+                            onChangeText={(value) => handleValueChange('productEnteringTemp', value)}
+                            keyboardType="numbers-and-punctuation"
+                            placeholder="-5"
+                            unitOptions={['°C', '°F']}
+                            selectedUnit={productData.tempUnit === 'F' ? '°F' : '°C'}
+                            onUnitChange={(unit) => handleUnitChange('tempUnit', unit === '°F' ? 'F' : 'C')}
+                        />
+
+                        <InputField
+                            label="Product Final Temp"
+                            value={productData.productFinalTemp.toString()}
+                            onChangeText={(value) => handleValueChange('productFinalTemp', value)}
+                            keyboardType="numbers-and-punctuation"
+                            placeholder="-30"
+                            unitOptions={['°C', '°F']}
+                            selectedUnit={productData.tempUnit === 'F' ? '°F' : '°C'}
+                            onUnitChange={(unit) => handleUnitChange('tempUnit', unit === '°F' ? 'F' : 'C')}
                         />
 
                         <InputField
@@ -63,17 +90,8 @@ export default function BlastProductTab() {
                     </View>
 
                     <View style={styles.section}>
-                        <Text style={styles.sectionTitle}>Before Freezing Load</Text>
-                        <Text style={styles.sectionSubtitle}>Mass of product and specific heat above freezing</Text>
-
-                        <InputField
-                            label="Mass Before Freezing"
-                            value={productData.massBeforeFreezing.toString()}
-                            onChangeText={(value) => handleValueChange('massBeforeFreezing', value)}
-                            keyboardType="decimal-pad"
-                            placeholder="2000"
-                            unit="kg"
-                        />
+                        <Text style={styles.sectionTitle}>Product Thermal Properties</Text>
+                        <Text style={styles.sectionSubtitle}>Specific heat and latent heat values</Text>
 
                         <InputField
                             label="Cp Above Freezing"
@@ -85,26 +103,12 @@ export default function BlastProductTab() {
                         />
 
                         <InputField
-                            label="Temperature Difference"
-                            value={productData.tempDiffAbove.toString()}
-                            onChangeText={(value) => handleValueChange('tempDiffAbove', value)}
+                            label="Cp Below Freezing"
+                            value={productData.cpBelowFreezing.toString()}
+                            onChangeText={(value) => handleValueChange('cpBelowFreezing', value)}
                             keyboardType="decimal-pad"
-                            placeholder="-3.3"
-                            unit="K"
-                        />
-                    </View>
-
-                    <View style={styles.section}>
-                        <Text style={styles.sectionTitle}>Latent Heat of Freezing</Text>
-                        <Text style={styles.sectionSubtitle}>Heat removal during phase change</Text>
-
-                        <InputField
-                            label="Mass for Latent Heat"
-                            value={productData.massLatentHeat.toString()}
-                            onChangeText={(value) => handleValueChange('massLatentHeat', value)}
-                            keyboardType="decimal-pad"
-                            placeholder="2000"
-                            unit="kg"
+                            placeholder="2.14"
+                            unit="kJ/kg·K"
                         />
 
                         <InputField
@@ -118,34 +122,17 @@ export default function BlastProductTab() {
                     </View>
 
                     <View style={styles.section}>
-                        <Text style={styles.sectionTitle}>After Freezing Load</Text>
-                        <Text style={styles.sectionSubtitle}>Mass of product and specific heat below freezing</Text>
+                        <Text style={styles.sectionTitle}>Product Properties</Text>
 
                         <InputField
-                            label="Mass After Freezing"
-                            value={productData.massAfterFreezing.toString()}
-                            onChangeText={(value) => handleValueChange('massAfterFreezing', value)}
-                            keyboardType="decimal-pad"
-                            placeholder="2000"
-                            unit="kg"
-                        />
-
-                        <InputField
-                            label="Cp Below Freezing"
-                            value={productData.cpBelowFreezing.toString()}
-                            onChangeText={(value) => handleValueChange('cpBelowFreezing', value)}
-                            keyboardType="decimal-pad"
-                            placeholder="2.14"
-                            unit="kJ/kg·K"
-                        />
-
-                        <InputField
-                            label="Temperature Difference"
-                            value={productData.tempDiffBelow.toString()}
-                            onChangeText={(value) => handleValueChange('tempDiffBelow', value)}
-                            keyboardType="decimal-pad"
-                            placeholder="-28.3"
-                            unit="K"
+                            label="Freezing Point"
+                            value={productData.freezingPoint.toString()}
+                            onChangeText={(value) => handleValueChange('freezingPoint', value)}
+                            keyboardType="numbers-and-punctuation"
+                            placeholder="-1.7"
+                            unitOptions={['°C', '°F']}
+                            selectedUnit={productData.tempUnit === 'F' ? '°F' : '°C'}
+                            onUnitChange={(unit) => handleUnitChange('tempUnit', unit === '°F' ? 'F' : 'C')}
                         />
                     </View>
 

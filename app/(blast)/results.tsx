@@ -68,7 +68,7 @@ export default function BlastResultsTab() {
         <View style={[styles.resultCard, isHighlighted && styles.highlightedCard]}>
             <Text style={[styles.resultLabel, isHighlighted && styles.highlightedLabel]}>{title}</Text>
             <Text style={[styles.resultValue, isHighlighted && styles.highlightedValue]}>
-                {value.toFixed(2)} <Text style={styles.resultUnit}>{unit}</Text>
+                {value.toFixed(1)} <Text style={styles.resultUnit}>{unit}</Text>
             </Text>
         </View>
     );
@@ -98,7 +98,7 @@ export default function BlastResultsTab() {
                     {/* Final Results - Highlighted */}
                     <SectionCard title="Final Results">
                         <ResultCard
-                            title="Refrigeration Capacity (with 20% Safety)"
+                            title="Refrigeration Capacity (with Safety)"
                             value={results.refrigerationCapacity}
                             unit="TR"
                             isHighlighted={true}
@@ -174,17 +174,17 @@ export default function BlastResultsTab() {
 
                     {/* Miscellaneous Loads */}
                     <SectionCard title="Miscellaneous Loads">
-                        <ResultCard title="Equipment Load" value={results.equipmentLoad} unit="kWh" />
-                        <ResultCard title="Occupancy Load" value={results.occupancyLoad} unit="kWh" />
-                        <ResultCard title="Light Load" value={results.lightLoad} unit="kWh" />
-                        <ResultCard title="Peripheral Heater Load" value={results.peripheralHeaterLoad} unit="kWh" />
-                        <ResultCard title="Door Heater Load" value={results.doorHeaterLoad} unit="kWh" />
-                        <ResultCard title="Tray Heater Load" value={results.trayHeaterLoad} unit="kWh" />
-                        <ResultCard title="Drain Heater Load" value={results.drainHeaterLoad} unit="kWh" />
+                        <ResultCard title="Equipment Load" value={results.equipmentLoad} unit="kJ" />
+                        <ResultCard title="Occupancy Load" value={results.occupancyLoad} unit="kJ" />
+                        <ResultCard title="Light Load" value={results.lightLoad} unit="kJ" />
+                        <ResultCard title="Peripheral Heater Load" value={results.peripheralHeaterLoad} unit="kJ" />
+                        <ResultCard title="Door Heater Load" value={results.doorHeaterLoad} unit="kJ" />
+                        <ResultCard title="Tray Heater Load" value={results.trayHeaterLoad} unit="kJ" />
+                        <ResultCard title="Drain Heater Load" value={results.drainHeaterLoad} unit="kJ" />
                         <ResultCard
                             title="Total Miscellaneous Load"
                             value={results.totalMiscLoad}
-                            unit="kWh"
+                            unit="kJ"
                         />
                     </SectionCard>
 
@@ -192,6 +192,8 @@ export default function BlastResultsTab() {
                     <SectionCard title="Heat Distribution">
                         <ResultCard title="Sensible Heat" value={results.sensibleHeatKJ24Hr} unit="kJ/24Hr" />
                         <ResultCard title="Latent Heat" value={results.latentHeatKJ24Hr} unit="kJ/24Hr" />
+                        <ResultCard title="SHR (Sensible Heat Ratio)" value={results.shr} unit="" />
+                        <ResultCard title="Air Quantity Required" value={results.airQtyRequiredCfm} unit="CFM" />
                     </SectionCard>
 
                     <View style={styles.footer}>

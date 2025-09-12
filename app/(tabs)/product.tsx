@@ -34,8 +34,10 @@ export default function ProductTab() {
     const next = {
       ...productData,
       productName: name,
-      // Only auto-fill constants from preset; keep mass/hours as is
+      // Auto-fill all preset values including new fields
       cpAboveFreezing: preset.cpAboveFreezing,
+      cpBelowFreezing: preset.cpBelowFreezing,
+      freezingPoint: preset.freezingPoint,
       watts: preset.respirationWattsPerTonne,
       // If user changes afterwards, they can still edit fields
       overridePreset: false,
@@ -60,7 +62,7 @@ export default function ProductTab() {
           <Text style={styles.sectionTitle}>Product Load</Text>
 
           <InputField
-            label="Mass of Product"
+            label="Weight"
             value={productData.massBeforeFreezing.toString()}
             onChangeText={(value) => handleNumericChange('massBeforeFreezing', value)}
             unitOptions={['kg', 'lbs']}
@@ -69,10 +71,21 @@ export default function ProductTab() {
           />
 
           <InputField
-            label="Cp Above Freezing"
-            value={productData.cpAboveFreezing.toString()}
-            onChangeText={(value) => handleNumericChange('cpAboveFreezing', value)}
-            unit="kJ/kg·K"
+            label="Product Entering Temperature"
+            value={productData.enteringTemp?.toString() || '30'}
+            onChangeText={(value) => handleNumericChange('enteringTemp', value)}
+            unitOptions={['°C', '°F']}
+            selectedUnit={productData.tempUnit === 'F' ? '°F' : '°C'}
+            onUnitChange={(unit) => updateProductData('tempUnit', unit === '°F' ? 'F' : 'C')}
+          />
+
+          <InputField
+            label="Product Final Temperature"
+            value={productData.finalTemp?.toString() || '4'}
+            onChangeText={(value) => handleNumericChange('finalTemp', value)}
+            unitOptions={['°C', '°F']}
+            selectedUnit={productData.tempUnit === 'F' ? '°F' : '°C'}
+            onUnitChange={(unit) => updateProductData('tempUnit', unit === '°F' ? 'F' : 'C')}
           />
 
           <InputField
@@ -82,6 +95,33 @@ export default function ProductTab() {
             unit="hrs"
           />
 
+          {productData.freezingPoint !== undefined && (
+            <InputField
+              label="Freezes At"
+              value={productData.freezingPoint.toString()}
+              onChangeText={(value) => handleNumericChange('freezingPoint', value)}
+              unitOptions={['°C', '°F']}
+              selectedUnit={productData.tempUnit === 'F' ? '°F' : '°C'}
+              onUnitChange={(unit) => updateProductData('tempUnit', unit === '°F' ? 'F' : 'C')}
+            />
+          )}
+
+          <InputField
+            label="Cp Above Freezing"
+            value={productData.cpAboveFreezing.toString()}
+            onChangeText={(value) => handleNumericChange('cpAboveFreezing', value)}
+            unit="kJ/kg·K"
+          />
+
+          {productData.cpBelowFreezing !== undefined && (
+            <InputField
+              label="Cp Below Freezing"
+              value={productData.cpBelowFreezing.toString()}
+              onChangeText={(value) => handleNumericChange('cpBelowFreezing', value)}
+              unit="kJ/kg·K"
+            />
+          )}
+
           {/* Calculation notes removed for cleaner UI */}
         </View>
 
@@ -89,7 +129,7 @@ export default function ProductTab() {
           <Text style={styles.sectionTitle}>Respiration Load</Text>
 
           <InputField
-            label="Mass of Product"
+            label="Weight for Respiration"
             value={productData.respirationMass.toString()}
             onChangeText={(value) => handleNumericChange('respirationMass', value)}
             unitOptions={['kg', 'lbs']}

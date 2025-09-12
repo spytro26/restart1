@@ -7,7 +7,6 @@ import {
   SafeAreaView,
 } from 'react-native';
 import { InputField } from '@/components/InputField';
-import { UnitPicker } from '@/components/UnitPicker';
 import { useFreezerStorageContext } from '@/hooks/FreezerStorageProvider';
 
 export default function FreezerMiscellaneousTab() {
@@ -38,76 +37,8 @@ export default function FreezerMiscellaneousTab() {
           </View>
 
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Temperature Settings</Text>
-            
-            <View style={styles.inputRow}>
-              <View style={styles.inputContainer}>
-                <InputField
-                  label="Ambient Temperature"
-                  value={miscData.ambientTemp.toString()}
-                  onChangeText={(value) => handleValueChange('ambientTemp', value)}
-                  keyboardType="decimal-pad"
-                  placeholder="45"
-                />
-              </View>
-              <View style={styles.unitContainer}>
-                <UnitPicker
-                  selectedUnit={miscData.tempUnit}
-                  onUnitChange={(unit) => handleUnitChange('tempUnit', unit)}
-                  units={['C', 'F']}
-                />
-              </View>
-            </View>
-
-            <View style={styles.inputRow}>
-              <View style={styles.inputContainer}>
-                <InputField
-                  label="Freezer Room Temperature"
-                  value={miscData.roomTemp.toString()}
-                  onChangeText={(value) => handleValueChange('roomTemp', value)}
-                  keyboardType="decimal-pad"
-                  placeholder="-25"
-                />
-              </View>
-              <View style={styles.unitContainer}>
-                <Text style={styles.unitText}>°{miscData.tempUnit}</Text>
-              </View>
-            </View>
-
-            <View style={styles.inputRow}>
-              <View style={styles.inputContainer}>
-                <InputField
-                  label="Product Incoming Temperature"
-                  value={miscData.productIncoming.toString()}
-                  onChangeText={(value) => handleValueChange('productIncoming', value)}
-                  keyboardType="decimal-pad"
-                  placeholder="25"
-                />
-              </View>
-              <View style={styles.unitContainer}>
-                <Text style={styles.unitText}>°{miscData.tempUnit}</Text>
-              </View>
-            </View>
-
-            <View style={styles.inputRow}>
-              <View style={styles.inputContainer}>
-                <InputField
-                  label="Product Final Temperature"
-                  value={miscData.productOutgoing.toString()}
-                  onChangeText={(value) => handleValueChange('productOutgoing', value)}
-                  keyboardType="decimal-pad"
-                  placeholder="-15"
-                />
-              </View>
-              <View style={styles.unitContainer}>
-                <Text style={styles.unitText}>°{miscData.tempUnit}</Text>
-              </View>
-            </View>
-          </View>
-
-          <View style={styles.section}>
             <Text style={styles.sectionTitle}>Air Change Load</Text>
-            
+
             <InputField
               label="Air Change Rate"
               value={miscData.airChangeRate.toString()}
@@ -138,7 +69,7 @@ export default function FreezerMiscellaneousTab() {
 
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Equipment Load</Text>
-            
+
             <InputField
               label="Equipment Power"
               value={miscData.equipmentPower.toString()}
@@ -160,7 +91,7 @@ export default function FreezerMiscellaneousTab() {
 
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Lighting Load</Text>
-            
+
             <InputField
               label="Light Power"
               value={miscData.lightPower.toString()}
@@ -182,7 +113,7 @@ export default function FreezerMiscellaneousTab() {
 
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Heater Loads</Text>
-            
+
             <InputField
               label="Peripheral Heaters"
               value={miscData.peripheralHeaters.toString()}
@@ -213,7 +144,7 @@ export default function FreezerMiscellaneousTab() {
 
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Occupancy Load</Text>
-            
+
             <InputField
               label="Number of People"
               value={miscData.occupancyCount.toString()}

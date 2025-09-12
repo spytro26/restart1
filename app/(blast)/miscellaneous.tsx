@@ -27,6 +27,13 @@ export default function BlastMiscellaneousTab() {
         });
     };
 
+    const handleUnitChange = (field: string, unit: string) => {
+        saveMiscData({
+            ...miscData,
+            [field]: unit,
+        });
+    };
+
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
@@ -45,7 +52,9 @@ export default function BlastMiscellaneousTab() {
                             onChangeText={(value) => handleValueChange('capacityRequired', value)}
                             keyboardType="decimal-pad"
                             placeholder="2000"
-                            unit="kgs"
+                            unitOptions={['kg', 'lbs']}
+                            selectedUnit={miscData.capacityUnit}
+                            onUnitChange={(unit) => handleUnitChange('capacityUnit', unit)}
                         />
 
                         <InputField
@@ -57,31 +66,6 @@ export default function BlastMiscellaneousTab() {
                             unit="Hrs"
                         />
 
-                        <InputField
-                            label="Internal Volume"
-                            value={miscData.internalVolume.toString()}
-                            onChangeText={(value) => handleValueChange('internalVolume', value)}
-                            keyboardType="decimal-pad"
-                            placeholder="3.5"
-                            unit="M3"
-                        />
-
-                        <InputField
-            keyboardType="decimal-pad"
-                            label="Insulation Type"
-                            value={miscData.insulationType}
-                            onChangeText={(value) => handleStringChange('insulationType', value)}
-                            placeholder="PUF"
-                        />
-
-                        <InputField
-                            label="Insulation Thickness"
-                            value={miscData.insulationThickness.toString()}
-                            onChangeText={(value) => handleValueChange('insulationThickness', value)}
-                            keyboardType="decimal-pad"
-                            placeholder="150"
-                            unit="mm"
-                        />
                     </View>
 
                     <View style={styles.section}>
@@ -153,7 +137,7 @@ export default function BlastMiscellaneousTab() {
                             value={miscData.occupancyCount.toString()}
                             onChangeText={(value) => handleValueChange('occupancyCount', value)}
                             keyboardType="decimal-pad"
-                            placeholder="4.6"
+                            placeholder="1.0"
                             unit="people"
                         />
 
@@ -207,7 +191,7 @@ export default function BlastMiscellaneousTab() {
                             value={miscData.peripheralHeaterCapacity.toString()}
                             onChangeText={(value) => handleValueChange('peripheralHeaterCapacity', value)}
                             keyboardType="decimal-pad"
-                            placeholder="1.6"
+                            placeholder="1.5"
                             unit="kW"
                         />
 
@@ -216,7 +200,7 @@ export default function BlastMiscellaneousTab() {
                             value={miscData.peripheralHeaterCount.toString()}
                             onChangeText={(value) => handleValueChange('peripheralHeaterCount', value)}
                             keyboardType="decimal-pad"
-                            placeholder="3"
+                            placeholder="1"
                         />
 
                         <InputField
@@ -310,45 +294,7 @@ export default function BlastMiscellaneousTab() {
                         />
                     </View>
 
-                    <View style={styles.section}>
-                        <Text style={styles.sectionTitle}>Temperature Parameters</Text>
 
-                        <InputField
-                            label="Ambient Temperature"
-                            value={miscData.ambientTemp.toString()}
-                            onChangeText={(value) => handleValueChange('ambientTemp', value)}
-                            keyboardType="decimal-pad"
-                            placeholder="43"
-                            unit="°C"
-                        />
-
-                        <InputField
-                            label="Room Temperature"
-                            value={miscData.roomTemp.toString()}
-                            onChangeText={(value) => handleValueChange('roomTemp', value)}
-                            keyboardType="decimal-pad"
-                            placeholder="-35"
-                            unit="°C"
-                        />
-
-                        <InputField
-                            label="Product Incoming"
-                            value={miscData.productIncoming.toString()}
-                            onChangeText={(value) => handleValueChange('productIncoming', value)}
-                            keyboardType="decimal-pad"
-                            placeholder="-5"
-                            unit="°C"
-                        />
-
-                        <InputField
-                            label="Product Outgoing"
-                            value={miscData.productOutgoing.toString()}
-                            onChangeText={(value) => handleValueChange('productOutgoing', value)}
-                            keyboardType="decimal-pad"
-                            placeholder="-30"
-                            unit="°C"
-                        />
-                    </View>
 
                     <View style={styles.footer}>
                         <Text style={styles.footerText}>Powered by Enzo</Text>

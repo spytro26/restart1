@@ -63,10 +63,8 @@ export default function HomePage() {
                         style={styles.logo}
                         resizeMode="contain"
                     />
-                    <Text style={styles.appTitle}>
-                        <Text style={styles.enzo}>Enzo</Text>
-                        <Text style={styles.coolCalc}> CoolCalc</Text>
-                    </Text>
+                    <Text style={styles.appTitle}>CoolCalc</Text>
+                    <Text style={styles.subtitle}>Heat Load Calculator</Text>
                 </View>
 
                 {/* Calculator Buttons */}
@@ -109,27 +107,32 @@ const styles = StyleSheet.create({
     },
     titleContainer: {
         alignItems: 'center',
-        marginBottom: height * 0.1,
+        marginBottom: height * 0.08,
+        paddingHorizontal: 20,
     },
     logo: {
-        width: width * 0.3,
-        height: width * 0.3,
-        marginBottom: 20,
+        width: width * 0.25,
+        height: width * 0.25,
+        marginBottom: 24,
     },
     appTitle: {
-        textAlign: 'center',
-    },
-    enzo: {
-        fontSize: width > 400 ? 48 : 42,
+        fontSize: width > 400 ? 52 : 46,
         fontWeight: '800',
         color: '#1e293b',
-        letterSpacing: 1,
+        letterSpacing: 1.2,
+        textAlign: 'center',
+        marginBottom: 8,
+        textShadowColor: 'rgba(0, 0, 0, 0.1)',
+        textShadowOffset: { width: 0, height: 2 },
+        textShadowRadius: 4,
     },
-    coolCalc: {
-        fontSize: width > 400 ? 48 : 42,
-        fontWeight: '300',
+    subtitle: {
+        fontSize: width > 400 ? 20 : 18,
+        fontWeight: '500',
         color: '#64748b',
         letterSpacing: 0.5,
+        textAlign: 'center',
+        opacity: 0.8,
     },
     buttonsContainer: {
         gap: 20,
